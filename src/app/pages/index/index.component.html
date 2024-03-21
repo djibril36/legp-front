@@ -1,0 +1,135 @@
+<app-navbar></app-navbar>
+<div class="wrapper">
+  <div class="page-header header-filter">
+    <div class="squares square1"></div>
+    <div class="squares square2"></div>
+    <div class="squares square3"></div>
+    <!-- <div class="squares square4"></div>
+    <div class="squares square5"></div> -->
+    <!-- <div class="squares square6"></div>
+    <div class="squares square7"></div> -->
+    <div class="container">
+      <div class="content-center brand">
+        <h1 class="h1-seo">Le GP</h1>
+        <h3 style="text-transform: lowercase">
+          La solution e-bagagiste incontournable pour vos transports de bagages
+          et marchandises
+        </h3>
+
+        <div class="row">
+          <div class="col-md-4">
+            <a
+              class="btn btn-simple btn-danger btn-round"
+              [routerLink]="['/gpsearch']"
+            >
+              Cherchez un GP
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a
+              class="btn btn-simple btn-danger btn-round"
+              [routerLink]="['/followup']"
+            >
+              Suivez votre colis
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a
+              class="btn btn-simple btn-danger btn-round"
+              [routerLink]="['/client-trip']"
+            >
+              Monétisez vos kg
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ----------------MAIN ///// CONTENU DE PAGE      ------------- -->
+
+  <div class="main">
+    <!--____________LES PROCHAINS DEPARTS____________ -->
+
+    <app-travelsofweek></app-travelsofweek>
+    <!--____________ PARTIE PUBLICITE _______________ -->
+
+    <div class="section" data-background-color="black">
+      <!-- <div class="space-50"></div>
+      <img class="path" src="assets/img/path1.png" /> -->
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <hr class="line-info" />
+            <h1>
+              <h1 class="profile-title text-left">Fës</h1>
+              <!-- <span class="text-info"> faites votre choix </span> -->
+            </h1>
+          </div>
+        </div>
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-5 mb-5 mb-lg-0">
+            <h3 class="text-white font-weight-light">Espace publicitaire</h3>
+            <p class="text-white mt-4">
+              Contactrer notrre service client pour une meilleure visibilité de
+              vos magasins ,produits ,activités et evenements
+            </p>
+            <a
+              class="btn btn-warning mt-4"
+              href="https://demos.creative-tim.com/blk-design-system-angular/#/documentation/alerts"
+            >
+              Contacter le service client ici
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <carousel [showIndicators]="true">
+              <slide>
+                <img
+                  alt="First slide"
+                  class="d-block w-100"
+                  src="assets/img/denys.jpg"
+                />
+              </slide>
+              <slide>
+                <img
+                  alt="Second slide"
+                  class="d-block w-100"
+                  src="assets/img/fabien-bazanegue.jpg"
+                />
+              </slide>
+              <slide>
+                <img
+                  alt="Third slide"
+                  class="d-block w-100"
+                  src="assets/img/mark-finn.jpg"
+                />
+              </slide>
+              <slide>
+                <img
+                  alt="Restaurant Zozo"
+                  class="d-block w-100"
+                  src="assets/img/zozo.jpeg"
+                />
+              </slide>
+            </carousel>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div data-background-color="black">
+      <img class="path" src="assets/img/path1.png" />
+
+      <div class="space-50"></div>
+    </div>
+    <div data-background-color="black" #target>
+      <img class="path" src="assets/img/path1.png" />
+    </div> -->
+  </div>
+
+  <!--_____________________ FOOTER_______________________ -->
+  <footer class="footer">
+    <app-footer></app-footer>
+  </footer>
+</div>

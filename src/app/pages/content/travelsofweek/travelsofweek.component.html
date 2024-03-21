@@ -1,0 +1,205 @@
+<div class="section section-coins">
+  <div class="container">
+    <!-- <img class="path" src="assets/img/path1.png" />
+      <div class="space-50"></div> -->
+    <div class="row">
+      <div class="col-md-4">
+        <hr class="line-info" />
+
+        <h1>
+          Les prochains départs
+          <span class="text-info"> faites votre choix </span>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card card-coin card-plain">
+          <div class="card-header">
+            <img class="img-center img-fluid" src="assets/img/8bag.png" />
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h4 class="text-uppercase">Mina GP</h4>
+                <span> Kaoalack-Dakar vers Rabat </span>
+                <hr class="line-success" />
+              </div>
+            </div>
+            <div class="row">
+              <ul class="list-group">
+                <li class="list-group-item">40 kg disponibles</li>
+                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
+                <li class="list-group-item">Départ : 22 Septembre 2023</li>
+                <li class="list-group-item">Dépot : Q. Medina Baye</li>
+                <li class="list-group-item">Reception : Rabat Agdal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-success btn-simple" (click)="loadVoyages()">
+              Contact du GP
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngFor="let voyaye of Voyages">
+        <p>{{ voyage.id_voyage }}</p>
+        <p>{{ voyage.depart }}</p>
+        <p>{{ voyage.arrivee }}</p>
+      </div> -->
+
+      <div class="col-md-3">
+        <div class="card card-coin card-plain">
+          <div class="card-header">
+            <img class="img-center img-fluid" src="assets/img/46bag.png" />
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h4 class="text-uppercase">Mina GP</h4>
+                <span> Kaoalack-Dakar vers Rabat </span>
+                <hr class="line-success" />
+              </div>
+            </div>
+            <div class="row">
+              <ul class="list-group">
+                <li class="list-group-item">40 kg disponibles</li>
+                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
+                <li class="list-group-item">Départ : 22 Septembre 2023</li>
+                <li class="list-group-item">Dépot : Q. Medina Baye</li>
+                <li class="list-group-item">Reception : Rabat Agdal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button
+              class="btn btn-success btn-simple"
+              data-target="#myModal1"
+              (click)="myModal1.show()"
+            >
+              Contact du GP
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card card-coin card-plain">
+          <div class="card-header">
+            <img class="img-center img-fluid" src="assets/img/44bag.png" />
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h4 class="text-uppercase">Mina GP</h4>
+                <span> Kaoalack-Dakar vers Rabat </span>
+                <hr class="line-success" />
+              </div>
+            </div>
+            <div class="row">
+              <ul class="list-group">
+                <li class="list-group-item">40 kg disponibles</li>
+                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
+                <li class="list-group-item">Départ : 22 Septembre 2023</li>
+                <li class="list-group-item">Dépot : Q. Medina Baye</li>
+                <li class="list-group-item">Reception : Rabat Agdal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button
+              class="btn btn-success btn-simple"
+              data-target="#myModal1"
+              (click)="myModal1.show()"
+            >
+              Contact du GP
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card card-coin card-plain">
+          <div class="card-header">
+            <img class="img-center img-fluid" src="assets/img/9bag.png" />
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h4 class="text-uppercase">Mina GP</h4>
+                <span> Kaoalack-Dakar vers Rabat </span>
+                <hr class="line-success" />
+              </div>
+            </div>
+            <div class="row">
+              <ul class="list-group">
+                <li class="list-group-item">40 kg disponibles</li>
+                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
+                <li class="list-group-item">Départ : 22 Septembre 2023</li>
+                <li class="list-group-item">Dépot : Q. Medina Baye</li>
+                <li class="list-group-item">Reception : Rabat Agdal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button
+              class="btn btn-success btn-simple"
+              data-target="#myModal1"
+              (click)="myModal1.show()"
+            >
+              Contact du GP
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--__________________________ DIALOG POR LE NUMERO DU GP_______________________ -->
+<div
+  aria-hidden="true"
+  aria-labelledby="myModalLabel"
+  bsModal
+  class="modal fade modal-mini modal-danger modal-mini"
+  #myModal1="bs-modal"
+  id="myModal1"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <button
+          aria-hidden="true"
+          class="close"
+          data-dismiss="modal"
+          (click)="myModal1.hide()"
+          type="button"
+        >
+          <i class="tim-icons icon-simple-remove text-white"> </i>
+        </button>
+        <div class="modal-profile">
+          <i class="tim-icons icon-single-02"> </i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>MINA GP</p>
+        <p>+212 XXX XX XX XX</p>
+        <p>+221 XX XXX XX XX</p>
+      </div>
+      <div class="modal-footer">
+        <!-- <button class="btn btn-link btn-neutral" type="button">Back</button> -->
+        <button
+          class="btn btn-link btn-neutral"
+          data-dismiss="modal"
+          type="button"
+          (click)="myModal1.hide()"
+        >
+          FERMER
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

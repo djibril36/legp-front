@@ -1,0 +1,484 @@
+<app-gp-navbar></app-gp-navbar>
+<div class="wrapper">
+  <div class="section">
+    <img class="dots" src="assets/img/dots.png" />
+
+    <img class="path" src="assets/img/path4.png" />
+    <div class="container align-items-center">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <h3>Gestion des colis</h3>
+          <nav class="navbar navbar-expand-lg bg-info">
+            <div class="container">
+              <a class="navbar-brand" href="javascript:void(0)"> Colis </a>
+              <div>
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/gp-createlug']">
+                      <i aria-hidden="true" class="tim-icons icon-simple-add">
+                      </i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" (click)="openSearchBar()">
+                      <i aria-hidden="true" class="tim-icons icon-zoom-split">
+                      </i>
+                    </a>
+                  </li>
+                  <!-- <li class="nav-item dropdown" dropdown>
+                    <a
+                      class="nav-link dropdown-toggle dropdown-toggle"
+                      data-toggle="dropdown"
+                      dropdownToggle
+                      href="javascript:void(0)"
+                      id="navbarDropdownMenuLink"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="tim-icons icon-settings-gear-63"
+                      >
+                      </i>
+                    </a>
+                    <div
+                      aria-labelledby="navbarDropdownMenuLink"
+                      class="dropdown-menu dropdown-menu-right"
+                      *dropdownMenu
+                    >
+                      <a class="dropdown-header"> Dropdown header </a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Action
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Another action
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Something else here
+                      </a>
+                      <div class="divider"></div>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Separated link
+                      </a>
+                      <div class="divider"></div>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        One more separated link
+                      </a>
+                    </div>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="container align-items-center">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="table-responsive">
+            <table class="table tablesorter" id="plain-table">
+              <thead>
+                <tr>
+                  <th>
+                    nº collis
+
+                    <div *ngIf="isSearchOpened" class="form-group">
+                      <input class="form-control" type="text" value="" />
+                    </div>
+                  </th>
+                  <th *ngIf="!isSearchOpened">Id voyage</th>
+                  <th>
+                    Expéditeur
+                    <div *ngIf="isSearchOpened" class="form-group">
+                      <input class="form-control" type="text" value="" />
+                    </div>
+                  </th>
+                  <th>
+                    Recepteur
+                    <div *ngIf="isSearchOpened" class="form-group">
+                      <input class="form-control" type="text" value="" />
+                    </div>
+                  </th>
+                  <th *ngIf="!isSearchOpened">Montant</th>
+                  <th *ngIf="isSearchOpened">
+                    <a class="nav-link" (click)="openSearchBar()">
+                      <i aria-hidden="true" class="tim-icons icon-zoom-split">
+                      </i>
+                    </a>
+                  </th>
+                  <!-- <th class="text-right">Actions</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ANF457OK</td>
+                  <td>TR4509IG</td>
+                  <td>Issakha Diop</td>
+                  <td>Sokhna KA</td>
+                  <td>80</td>
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-success btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-settings-gear-63"></i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-danger btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ANT4578K</td>
+                  <td>TR78109IG</td>
+                  <td>Mati Mbaye</td>
+                  <td>Aly SY</td>
+                  <td>130</td>
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-success btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-settings-gear-63"></i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-danger btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>YPT4578K</td>
+                  <td>TR890JK</td>
+                  <td>Sidi Ndiaye</td>
+                  <td>Khoudia Ndiaye</td>
+                  <td>210</td>
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-success btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-settings-gear-63"></i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-danger btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="dndPlaceholder col-md-12" #placeholder></div>
+      <div>
+        <h1>Colis recuperer</h1>
+        <p class="lead">Deplacer le colis vers son état</p>
+      </div>
+
+      <h3>Simple Drag and Drop</h3>
+
+      <div class="row">
+        <div
+          class="col-md-6"
+          [dndList]
+          [dndPlaceholder]="placeholder"
+          [dndModel]="simpleList[0]"
+        >
+          <div
+            *ngFor="let item of simpleList[0]"
+            class="col-md-12"
+            [dndType]="'item'"
+            (dndMoved)="removeItem(item, simpleList[0])"
+            [dndDraggable]
+            [dndObject]="item"
+          >
+            <div class="table-responsive">
+              <table class="table tablesorter" id="plain-table">
+                <thead>
+                  <tr>
+                    <th>
+                      nº collis
+
+                      <div *ngIf="isSearchOpened" class="form-group">
+                        <input class="form-control" type="text" value="" />
+                      </div>
+                    </th>
+                    <th>
+                      Id voyage
+                      <div *ngIf="isSearchOpened" class="form-group">
+                        <input class="form-control" type="text" value="" />
+                      </div>
+                    </th>
+                    <th>
+                      Exp.
+                      <div *ngIf="isSearchOpened" class="form-group">
+                        <input class="form-control" type="text" value="" />
+                      </div>
+                    </th>
+                    <th>
+                      Recep.
+                      <div *ngIf="isSearchOpened" class="form-group">
+                        <input class="form-control" type="text" value="" />
+                      </div>
+                    </th>
+                    <th>
+                      Montant
+                      <div class="form-group">
+                        <input
+                          *ngIf="isSearchOpened"
+                          class="form-control"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </th>
+                    <!-- <th class="text-right">Actions</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ANF457OK</td>
+                    <td>TR4509IG</td>
+                    <td>Issakha Diop</td>
+                    <td>Sokhna KA</td>
+                    <td>80</td>
+                    <td>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-success btn-simple btn-icon btn-sm"
+                      >
+                        <i class="tim-icons icon-settings-gear-63"></i>
+                      </button>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-danger btn-simple btn-icon btn-sm"
+                      >
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ANT4578K</td>
+                    <td>TR78109IG</td>
+                    <td>Mati Mbaye</td>
+                    <td>Aly SY</td>
+                    <td>130</td>
+                    <td>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-success btn-simple btn-icon btn-sm"
+                      >
+                        <i class="tim-icons icon-settings-gear-63"></i>
+                      </button>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-danger btn-simple btn-icon btn-sm"
+                      >
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>YPT4578K</td>
+                    <td>TR890JK</td>
+                    <td>Sidi Ndiaye</td>
+                    <td>Khoudia Ndiaye</td>
+                    <td>210</td>
+                    <td>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-success btn-simple btn-icon btn-sm"
+                      >
+                        <i class="tim-icons icon-settings-gear-63"></i>
+                      </button>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-danger btn-simple btn-icon btn-sm"
+                      >
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-6"
+          [dndList]
+          [dndModel]="simpleList[1]"
+          [dndPlaceholder]="placeholder"
+        >
+          <div
+            *ngFor="let item of simpleList[1]"
+            class="col-md-12"
+            [dndType]="'item'"
+            (dndMoved)="removeItem(item, simpleList[1])"
+            [dndDraggable]
+            [dndObject]="item"
+          >
+            {{ item.name }}
+          </div>
+        </div>
+      </div>
+
+      <h3>Typed Drag and Drop</h3>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Only males</h4>
+          <div
+            [dndList]="{
+              allowedTypes: ['male']
+            }"
+            [dndPlaceholder]="placeholder"
+            [dndModel]="typedList[0]"
+          >
+            <div
+              *ngFor="let item of typedList[0]"
+              class="col-md-12"
+              [dndType]="item.type"
+              (dndMoved)="removeItem(item, typedList[0])"
+              [dndDraggable]
+              [dndObject]="item"
+            >
+              {{ item.name }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <h4>Only females</h4>
+          <div
+            [dndList]="{
+              allowedTypes: ['female']
+            }"
+            [dndModel]="typedList[1]"
+            [dndPlaceholder]="placeholder"
+          >
+            <div
+              *ngFor="let item of typedList[1]"
+              class="col-md-12"
+              [dndType]="item.type"
+              (dndMoved)="removeItem(item, typedList[1])"
+              [dndDraggable]
+              [dndObject]="item"
+            >
+              {{ item.name }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h4>People</h4>
+          <div
+            [dndList]="{
+              allowedTypes: ['male', 'female']
+            }"
+            [dndModel]="typedList[2]"
+            [dndPlaceholder]="placeholder"
+          >
+            <div
+              *ngFor="let item of typedList[2]"
+              class="col-md-12"
+              [dndType]="item.type"
+              (dndMoved)="removeItem(item, typedList[2])"
+              [dndDraggable]
+              [dndObject]="item"
+            >
+              {{ item.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Nested Drag and Drop</h3>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="panel">
+            <div class="panel-heading">New Items</div>
+            <div class="panel-body">
+              <li
+                type="button"
+                *ngFor="let template of nestedList.templates"
+                [dndType]="template.type"
+                [dndDraggable]="{ effectAllowed: 'copy' }"
+                [dndObject]="template"
+                (dndCopied)="template.id = template.id + 1"
+                class="btn btn-default btn-lg col-md-12"
+              >
+                {{ template.type }}
+              </li>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div
+              *ngFor="let dropzone of nestedList.dropzones; let i = index"
+              class="col-md-6"
+            >
+              <div class="dropzone box box-yellow">
+                <!-- The dropzone also uses the list template -->
+                <h3>Dropzone {{ i + 1 }}</h3>
+                <div
+                  [dndList]="{
+                    allowedTypes: ['item', 'container']
+                  }"
+                  [dndModel]="dropzone"
+                  [dndPlaceholder]="placeholder"
+                  class="col-md-12"
+                >
+                  <div *ngFor="let item of dropzone">
+                    <container
+                      *ngIf="item.type === 'container'"
+                      [list]="dropzone"
+                      [model]="item"
+                    ></container>
+                    <div
+                      *ngIf="item.type === 'item'"
+                      [dndType]="item.type"
+                      [dndDraggable]
+                      (dndMoved)="removeItem(item, dropzone)"
+                      [dndObject]="item"
+                      class="col-md-12"
+                    >
+                      {{ item.type }} {{ item.id }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <app-gp-footer></app-gp-footer>
+  </footer>
+</div>

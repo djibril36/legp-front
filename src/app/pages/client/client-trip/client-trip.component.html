@@ -1,0 +1,307 @@
+<nav
+  class="navbar navbar-expand-lg fixed-top navbar-transparent"
+  color-on-scroll="100"
+  id="navbar-top"
+>
+  <div class="container">
+    <div class="navbar-translate">
+      <a
+        class="navbar-brand"
+        [routerLink]="['/home']"
+        placement="bottom"
+        tooltip="Votre e-bagagiste"
+      >
+        <span> Le GP•</span>
+      </a>
+      <button
+        aria-controls="navigation-index"
+        aria-label="Toggle navigation"
+        class="navbar-toggler navbar-toggler"
+        [attr.aria-expanded]="!isCollapsed"
+        (click)="isCollapsed = !isCollapsed"
+        id="navigation"
+        type="button"
+      >
+        <span class="navbar-toggler-bar bar1"> </span>
+        <span class="navbar-toggler-bar bar2"> </span>
+        <span class="navbar-toggler-bar bar3"> </span>
+      </button>
+    </div>
+    <div
+      class="navbar-collapse justify-content-end"
+      [collapse]="isCollapsed"
+      id="navigation"
+    >
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand"><a> Le GP </a></div>
+          <div class="col-6 collapse-close text-right">
+            <button
+              aria-controls="navigation-index"
+              aria-label="Toggle navigation"
+              class="navbar-toggler"
+              [attr.aria-expanded]="!isCollapsed"
+              (click)="isCollapsed = !isCollapsed"
+              id="navigation"
+              type="button"
+            >
+              <i class="tim-icons icon-simple-remove"> </i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            href="https://twitter.com/CreativeTim"
+            placement="bottom"
+            target="_blank"
+            tooltip="Follow us on Twitter"
+          >
+            <i class="fab fa-twitter"> </i>
+            <p class="d-lg-none d-xl-none">Twitter</p>
+          </a>
+        </li>
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            href="https://www.facebook.com/CreativeTim"
+            placement="bottom"
+            target="_blank"
+            tooltip="Like us on Facebook"
+          >
+            <i class="fab fa-facebook-square"> </i>
+            <p class="d-lg-none d-xl-none">Facebook</p>
+          </a>
+        </li>
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            href="https://www.instagram.com/CreativeTimOfficial"
+            placement="bottom"
+            target="_blank"
+            tooltip="Follow us on Instagram"
+          >
+            <i class="fab fa-instagram"> </i>
+            <p class="d-lg-none d-xl-none">Instagram</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/home']">
+            Retour vers l'accueil
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="section section-lg section-safe">
+  <img class="path" src="assets/img/path5.png" />
+
+  <div class="container">
+    <div class="row row-grid justify-content-between">
+      <div class="col-md-6">
+        <div class="px-md-5">
+          <hr class="line-success col-lg-2" />
+
+          <h3>Publiez votre voyage</h3>
+
+          <p>
+            Nous vous aidons à monétiser vos kg non utilisés en toute sécurité
+            pour pou rentabaliservotre voyage
+          </p>
+          <ul class="list-unstyled mt-5">
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div class="icon icon-success mb-2">
+                  <i class="tim-icons icon-vector"> </i>
+                </div>
+                <div class="ml-3">
+                  <h6>Vos kg peuvent etre acheter par un GP</h6>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div class="icon icon-success mb-2">
+                  <i class="tim-icons icon-tap-02"> </i>
+                </div>
+                <div class="ml-3">
+                  <h6>Vous pouvez vous meme gerer des clients</h6>
+                </div>
+              </div>
+            </li>
+            <li class="py-2">
+              <div class="d-flex align-items-center">
+                <div class="icon icon-success mb-2">
+                  <i class="tim-icons icon-single-02"> </i>
+                </div>
+                <div class="ml-3">
+                  <h6>Rejoignez notre communauté et devenez GP</h6>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <!-- <img class="img-fluid floating" src="assets/img/chester-wade.jpg" /> -->
+        <hr class="line-success col-lg-4" />
+
+        <form class="form">
+          <div
+            class="input-group"
+            [ngClass]="{ 'input-group-focus': focus1 === true }"
+          >
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="tim-icons icon-single-02"> </i>
+              </div>
+            </div>
+            <input
+              class="form-control"
+              placeholder="Nom complet"
+              type="text"
+              (focus)="focus1 = true"
+              (blur)="focus1 = false"
+            />
+          </div>
+          <div
+            class="input-group"
+            [ngClass]="{ 'input-group-focus': focus1 === true }"
+          >
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="tim-icons icon-mobile"> </i>
+              </div>
+            </div>
+            <input
+              class="form-control"
+              placeholder="Numero téléphone"
+              type="text"
+              (focus)="focus1 = true"
+              (blur)="focus1 = false"
+            />
+          </div>
+          <div
+            class="input-group"
+            [ngClass]="{ 'input-group-focus': focus1 === true }"
+          >
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="tim-icons icon-square-pin"> </i>
+              </div>
+            </div>
+            <input
+              class="form-control"
+              placeholder="Ville de départ"
+              type="text"
+              (focus)="focus1 = true"
+              (blur)="focus1 = false"
+            />
+          </div>
+
+          <div
+            class="input-group"
+            [ngClass]="{ 'input-group-focus': focus2 === true }"
+          >
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="tim-icons icon-square-pin"> </i>
+              </div>
+            </div>
+            <input
+              class="form-control"
+              placeholder="ville d'arrivée"
+              type="text"
+              (focus)="focus2 = true"
+              (blur)="focus2 = false"
+            />
+          </div>
+
+          <div
+            class="input-group"
+            [ngClass]="{ 'input-group-focus': focus2 === true }"
+          >
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="tim-icons icon-money-coins"> </i>
+              </div>
+            </div>
+            <input
+              class="form-control"
+              placeholder="Nombre de kg "
+              type="number"
+              (focus)="focus2 = true"
+              (blur)="focus2 = false"
+            />
+          </div>
+          <div class="row">
+            <div
+              class="input-group col-lg-6"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="tim-icons icon-calendar-60"> </i>
+                </div>
+              </div>
+              <input
+                bsDatepicker
+                class="form-control"
+                data-datepicker-color="danger"
+                [bsConfig]="{
+                  isAnimated: true,
+                  containerClass: 'theme-red'
+                }"
+                [bsValue]="date"
+                id="datepicker"
+                type="text"
+                placeholder="Date et heure du vol"
+              />
+            </div>
+            <div
+              class="input-group col-lg-4"
+              [ngClass]="{ 'input-group-focus': focus2 === true }"
+            >
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="tim-icons icon-watch-time"> </i>
+                </div>
+              </div>
+              <input
+                class="form-control"
+                type="time"
+                (focus)="focus2 = true"
+                (blur)="focus2 = false"
+              />
+            </div>
+          </div>
+          <a class="btn btn-simple btn-danger btn-round">
+            <i aria-hidden="true" class="tim-icons icon-send"> </i>
+            Terminez
+          </a>
+
+          <!-- <button
+
+            class="btn btn-success btn-round float-right"
+            placement="right"
+            type="submit"
+          >
+            Envoyez
+          </button> -->
+          <!-- <div class="form-check text-left">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" />
+
+              <span class="form-check-sign"> </span> inclure les autres
+              <a href="javascript:void(0)"> voyages de la semaine </a> .
+            </label>
+          </div> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

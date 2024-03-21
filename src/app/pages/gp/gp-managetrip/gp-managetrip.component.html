@@ -1,0 +1,149 @@
+<app-gp-navbar></app-gp-navbar>
+<div class="wrapper">
+  <div class="section">
+    <img class="dots" src="assets/img/dots.png" />
+
+    <img class="path" src="assets/img/path4.png" />
+
+    <div class="container align-items-center">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <h3>Gérer mes voyages</h3>
+          <nav class="navbar navbar-expand-lg bg-success">
+            <div class="container">
+              <a class="navbar-brand" href="javascript:void(0)"> Voyages </a>
+              <div>
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/gp-createlug']">
+                      <i aria-hidden="true" class="tim-icons icon-simple-add">
+                      </i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">
+                      <i aria-hidden="true" class="tim-icons icon-zoom-split">
+                      </i>
+                    </a>
+                  </li>
+                  <!-- <li class="nav-item dropdown" dropdown>
+                    <a
+                      class="nav-link dropdown-toggle dropdown-toggle"
+                      data-toggle="dropdown"
+                      dropdownToggle
+                      href="javascript:void(0)"
+                      id="navbarDropdownMenuLink"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="tim-icons icon-settings-gear-63"
+                      >
+                      </i>
+                    </a>
+                    <div
+                      aria-labelledby="navbarDropdownMenuLink"
+                      class="dropdown-menu dropdown-menu-right"
+                      *dropdownMenu
+                    >
+                      <a class="dropdown-header"> Dropdown header </a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Action
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Another action
+                      </a>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Something else here
+                      </a>
+                      <div class="divider"></div>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        Separated link
+                      </a>
+                      <div class="divider"></div>
+                      <a class="dropdown-item" href="javascript:void(0)">
+                        One more separated link
+                      </a>
+                    </div>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="container align-items-center">
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="table-responsive">
+            <table class="table tablesorter" id="plain-table">
+              <thead>
+                <tr>
+                  <th>Id voyage</th>
+                  <th>Date voyage</th>
+                  <th>Colis</th>
+                  <th>Kg</th>
+                  <th>Montant</th>
+                  <!-- <th class="text-right">Actions</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ANT4578K</td>
+                  <td>20/12/2023</td>
+                  <td>56</td>
+                  <td>89</td>
+                  <td>11000 dhs</td>
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-success btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-settings-gear-63"></i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-danger btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ANT4578K</td>
+                  <td>20/12/2023</td>
+                  <td>56</td>
+                  <td>89</td>
+                  <td>11000 dhs</td>
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-success btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-settings-gear-63"></i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-danger btn-simple btn-icon btn-sm"
+                    >
+                      <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <app-gp-footer></app-gp-footer>
+  </footer>
+</div>

@@ -1,0 +1,254 @@
+<app-gp-navbar></app-gp-navbar>
+<div class="wrapper">
+  <div class="row">
+    <img class="dots" src="assets/img/dots.png" />
+    <img class="path" src="assets/img/path4.png" />
+  </div>
+
+  <div class="section">
+    <div class="container align-items-center">
+      <div class="row">
+        <!--___________________ PUBLIEZ UN VOYAGE______________  -->
+
+        <div class="col-lg-6 col-md-6">
+          <label>Publiez un voyage</label>
+          <div class="card card-plain">
+            <!-- <div class="card-header">
+              <h1 class="profile-title text-left">Contact</h1>
+              <h5 class="text-on-back">03</h5>
+            </div> -->
+            <div class="card-body">
+              <form>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> Ville dépot </label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        placeholder="Casablanca"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> Ville reception </label>
+                      <input
+                        class="form-control"
+                        placeholder="Dakar"
+                        type="type"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> Nbr de kilos dispo</label>
+                      <input class="form-control" type="number" value="50" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> Tarif/kg </label>
+                      <input class="form-control" type="number" value="70" />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Date de départ</label>
+                </div>
+                <div
+                  class="input-group"
+                  [ngClass]="{ 'input-group-focus': focus3 === true }"
+                >
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="tim-icons icon-calendar-60"> </i>
+                    </div>
+                  </div>
+                  <input
+                    bsDatepicker
+                    class="form-control"
+                    data-datepicker-color="success"
+                    [bsConfig]="{
+                      isAnimated: true,
+                      containerClass: 'theme-red',
+                      dateInputFormat: 'DD-MM-YYYY'
+                    }"
+                    [bsValue]="bsValue"
+                    [minDate]="minDate"
+                    (bsValueChange)="getDate($event)"
+                    id="datepicker"
+                    placeholder="Choisir une date"
+                    (focus)="focus3 = true"
+                    (blur)="focus3 = false"
+                  />
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> Commentaire </label>
+                      <input class="form-control" type="text" />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-danger btn-round float-right"
+                  placement="right"
+                  type="submit"
+                >
+                  Publiez
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!--___________________ PROFILE GP______________  -->
+
+        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+          <div class="prof">
+            <div class="card card-coin card-plain">
+              <div class="card-header">
+                <img
+                  class="img-center img-fluid rounded-circle"
+                  src="assets/img/mike.jpg"
+                />
+
+                <h4 class="title">MINA GP</h4>
+              </div>
+              <div class="card-body">
+                <tabset
+                  class="nav-tabs-danger justify-content-center tab-subcategories"
+                >
+                  <tab heading="Gains">
+                    <div class="table-responsive">
+                      <table class="table tablesorter" id="plain-table">
+                        <thead class="text-danger">
+                          <tr>
+                            <th class="header">Voy</th>
+                            <th class="header">Colis</th>
+                            <th class="header">Kg</th>
+                            <th class="header">Mont.</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>TR45RINM</td>
+                            <td>89</td>
+                            <td>50</td>
+                            <td>7000</td>
+                          </tr>
+                          <tr>
+                            <td>TR45RINM</td>
+                            <td>89</td>
+                            <td>50</td>
+                            <td>7000</td>
+                          </tr>
+                          <tr>
+                            <td>TR45RINM</td>
+                            <td>89</td>
+                            <td>50</td>
+                            <td>7000</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </tab>
+                  <tab heading="Rec.">
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label"> Pay to </label>
+                      <div class="col-sm-9">
+                        <div class="form-group">
+                          <input
+                            class="form-control"
+                            placeholder="e.g. 1Nasd92348hU984353hfid"
+                            type="text"
+                          />
+
+                          <span class="form-text">
+                            Please enter a valid address.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label"> Amount </label>
+                      <div class="col-sm-9">
+                        <div class="form-group">
+                          <input
+                            class="form-control"
+                            placeholder="1.587"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-simple btn-danger btn-icon btn-round float-right"
+                      type="submit"
+                    >
+                      <i class="tim-icons icon-send"> </i>
+                    </button>
+                  </tab>
+                  <tab heading="Actu">
+                    <div class="table-responsive">
+                      <table class="table tablesorter" id="plain-table">
+                        <thead class="text-danger">
+                          <tr>
+                            <th class="header">Avis clients/Notifications</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>avis client : gp professionelle</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Le GP : 23 kg dispo chez un particulier pour votre
+                              prochin depart
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>notation client : 3 etoiles</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </tab>
+                </tabset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section section-lg">
+    <div class="col-md-12">
+      <div class="card card-chart card-plain">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <hr class="line-primary" />
+
+              <h5 class="card-category">Statistiques des voyages</h5>
+              <h2 class="card-title">Performance</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-area"><canvas id="chartBig"> </canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <app-gp-footer></app-gp-footer>
+  </footer>
+</div>
