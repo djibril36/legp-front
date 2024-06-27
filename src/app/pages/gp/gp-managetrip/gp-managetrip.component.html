@@ -8,14 +8,19 @@
     <div class="container align-items-center">
       <div class="row">
         <div class="col-lg-12 col-md-12">
-          <h3>Gérer mes voyages</h3>
+          <h3>
+            <i>
+              <img class="custom-icon" src="assets/img/ticket-flight.png" />
+            </i>
+            Gérer mes voyages
+          </h3>
           <nav class="navbar navbar-expand-lg bg-success">
             <div class="container">
               <a class="navbar-brand" href="javascript:void(0)"> Voyages </a>
               <div>
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/gp-createlug']">
+                    <a class="nav-link" [routerLink]="['/gp-profile']">
                       <i aria-hidden="true" class="tim-icons icon-simple-add">
                       </i>
                     </a>
@@ -76,48 +81,23 @@
     <div class="container align-items-center">
       <div class="row">
         <div class="col-lg-12 col-md-12">
-          <div class="table-responsive">
+          <div class="table-responsive" *ngIf="voyages$ | async as voyages">
             <table class="table tablesorter" id="plain-table">
               <thead>
                 <tr>
-                  <th>Id voyage</th>
                   <th>Date voyage</th>
-                  <th>Colis</th>
-                  <th>Kg</th>
-                  <th>Montant</th>
+                  <th>Ville départ</th>
+                  <th>Ville arrivée</th>
+                  <th>Tarif</th>
                   <!-- <th class="text-right">Actions</th> -->
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>ANT4578K</td>
-                  <td>20/12/2023</td>
-                  <td>56</td>
-                  <td>89</td>
-                  <td>11000 dhs</td>
-                  <td>
-                    <button
-                      type="button"
-                      rel="tooltip"
-                      class="btn btn-success btn-simple btn-icon btn-sm"
-                    >
-                      <i class="tim-icons icon-settings-gear-63"></i>
-                    </button>
-                    <button
-                      type="button"
-                      rel="tooltip"
-                      class="btn btn-danger btn-simple btn-icon btn-sm"
-                    >
-                      <i class="tim-icons icon-simple-remove"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>ANT4578K</td>
-                  <td>20/12/2023</td>
-                  <td>56</td>
-                  <td>89</td>
-                  <td>11000 dhs</td>
+                <tr *ngFor="let voyage of voyages.reverse()">
+                  <td>{{ voyage.date_voyage }}</td>
+                  <td>{{ voyage.ville_depart }}</td>
+                  <td>{{ voyage.ville_arrivee }}</td>
+                  <td>{{ voyage.tarif }}</td>
                   <td>
                     <button
                       type="button"

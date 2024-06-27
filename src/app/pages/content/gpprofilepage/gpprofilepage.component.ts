@@ -1,5 +1,12 @@
+import { HttpHeaders } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import Chart from "chart.js";
+import { DateFormatter } from "ngx-bootstrap/datepicker";
+import { Utilisateur } from "src/app/utils/models/utilisateur";
+import { RegisterService } from "src/app/utils/services/register.service";
+import { VoyageService } from "src/app/utils/services/voyage.service";
 
 @Component({
   selector: "app-gpprofilepage",
@@ -8,9 +15,96 @@ import Chart from "chart.js";
 })
 export class GpprofilepageComponent implements OnInit {
   isCollapsed = true;
-  constructor() {}
+  submitted = false;
+  connectedUser: Utilisateur;
+  voyageForm: FormGroup;
+  currentToken: string;
+  minDate = new Date();
+  controlValid = false;
+  httpOptions: {};
+  erroMessage: any;
+  constructor(
+    private _registerService: RegisterService,
+    private formBuilder: FormBuilder,
+    private _voyageService: VoyageService,
+    private _router: Router
+  ) {}
+
+  publierVoyage() {
+    this.submitted = true;
+    this.controlValid = this.inputControl();
+    // si la saisie est valide
+    if (this.controlValid) {
+      let dateVoyage = this.voyageForm.value["date_voyage"];
+      const idVoyage = this.generateIdVoyage(
+        this.connectedUser.username,
+        dateVoyage
+      );
+      const newVoyage = {
+        data: {
+          id_voyage: idVoyage,
+          date_voyage: this.voyageForm.value["date_voyage"],
+          ville_depart: this.voyageForm.value["depart"],
+          ville_arrivee: this.voyageForm.value["arrivee"],
+          kiloDispo: this.voyageForm.value["kg_disponible"] || 100,
+          tarif: this.voyageForm.value["tarif"],
+          nomGp: this.connectedUser.username,
+          semaine: 40,
+          commentaire: this.voyageForm.value["commentaire"] || " ",
+        },
+      };
+      this._voyageService.createVoyage(newVoyage, this.httpOptions).subscribe({
+        next: () => {
+          this.voyageForm.reset();
+          this._router.navigateByUrl("/gp-managetrip");
+        },
+        error: (error) => {
+          this.erroMessage = error;
+        },
+      });
+    }
+  }
+
+  get f() {
+    return this.voyageForm.controls;
+  }
+
+  generateIdVoyage(gpName, dateVoyage) {
+    return gpName + dateVoyage.getTime();
+  }
+
+  inputControl() {
+    if (
+      this.voyageForm.value["depart"] != null &&
+      this.voyageForm.value["arrivee"] != null &&
+      this.voyageForm.value["date_voyage"] != null &&
+      this.voyageForm.value["tarif"] != null
+    ) {
+      return true;
+    }
+  }
 
   ngOnInit() {
+    // information du gp connecté
+    this.connectedUser = this._registerService.getConnectedUser();
+    this.currentToken = this._registerService.getPersistedToken();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.currentToken}`,
+      }),
+    };
+
+    // voyage form
+    this.voyageForm = this.formBuilder.group({
+      depart: ["", Validators.required],
+      arrivee: ["", Validators.required],
+      date_voyage: ["", Validators.required],
+      tarif: ["", Validators.required],
+      kg_disponible: [""],
+      commentaire: [""],
+    });
+
     var body = document.getElementsByTagName("body")[0];
     body.classList.add("profile-page");
 

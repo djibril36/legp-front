@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Observable } from "rxjs";
+import { Colis } from "src/app/utils/models/colis";
+import { Utilisateur } from "src/app/utils/models/utilisateur";
+import { ColisService } from "src/app/utils/services/colis.service";
+import { RegisterService } from "src/app/utils/services/register.service";
 
 @Component({
   selector: "app-manageluggages",
@@ -8,147 +14,67 @@ import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 export class ManageluggagesComponent implements OnInit {
   isCollapsed = true;
   isSearchOpened = false;
+  noResult = false;
+  connectedUser: Utilisateur;
+  searchForm: FormGroup;
+  colis$: Observable<Colis[]> | null;
+  colisFounded$: Observable<Colis[]> | null;
 
-  public simpleList = [
-    [{ name: "John" }, { name: "Smith" }, { name: "George" }],
-    [{ name: "Jennifer" }, { name: "Laura" }, { name: "Georgina" }],
-  ];
+  constructor(
+    private _registerService: RegisterService,
+    private _colisService: ColisService,
+    private _formBuilder: FormBuilder
+  ) {}
 
-  public typedList = [
-    [
-      { name: "John", type: "male" },
-      { name: "Smith", type: "male" },
-      { name: "George", type: "male" },
-    ],
-    [
-      { name: "Jennifer", type: "female" },
-      { name: "Laura", type: "female" },
-      { name: "Georgina", type: "female" },
-    ],
-    [
-      { name: "Timmy", type: "male" },
-      { name: "Karen", type: "female" },
-    ],
-  ];
+  ngOnInit() {
+    this.getColisduGp();
+  }
 
-  public nestedList = {
-    selected: null,
-    templates: [
-      { type: "item", id: 2 },
-      { type: "container", id: 1, columns: [[], []] },
-    ],
-    dropzones: [
-      [
-        {
-          type: "container",
-          id: 1,
-          columns: [
-            [
-              {
-                type: "item",
-                id: "1",
-              },
-              {
-                type: "item",
-                id: "2",
-              },
-            ],
-            [
-              {
-                type: "item",
-                id: "3",
-              },
-            ],
-          ],
-        },
-        {
-          type: "item",
-          id: "4",
-        },
-        {
-          type: "item",
-          id: "5",
-        },
-        {
-          type: "item",
-          id: "6",
-        },
-      ],
-      [
-        {
-          type: "item",
-          id: 7,
-        },
-        {
-          type: "item",
-          id: "8",
-        },
-        {
-          type: "container",
-          id: "2",
-          columns: [
-            [
-              {
-                type: "item",
-                id: "9",
-              },
-              {
-                type: "item",
-                id: "10",
-              },
-              {
-                type: "item",
-                id: "11",
-              },
-            ],
-            [
-              {
-                type: "item",
-                id: "12",
-              },
-              {
-                type: "container",
-                id: "3",
-                columns: [
-                  [
-                    {
-                      type: "item",
-                      id: "13",
-                    },
-                  ],
-                  [
-                    {
-                      type: "item",
-                      id: "14",
-                    },
-                  ],
-                ],
-              },
-              {
-                type: "item",
-                id: "15",
-              },
-              {
-                type: "item",
-                id: "16",
-              },
-            ],
-          ],
-        },
-        {
-          type: "item",
-          id: 16,
-        },
-      ],
-    ],
-  };
-
-  constructor() {}
-
-  ngOnInit() {}
   ngOnDestroy() {}
+
   openSearchBar() {
-    this.isSearchOpened = !this.isSearchOpened;
+    this.isSearchOpened = true;
+    this.initChercherForms();
+  }
+
+  closeSearchBar() {
+    this.isSearchOpened = false;
+    this.colisFounded$ = null;
+  }
+
+  getColisduGp() {
+    this.connectedUser = this._registerService.getConnectedUser();
+    if (this.connectedUser.username) {
+      this.colis$ = this._colisService.getColisDuGp(
+        this.connectedUser.username
+      );
+    }
+  }
+
+  searchColis() {
+    let expediteur = this.searchForm.value["expediteur"] ?? " ";
+    let destinataire = this.searchForm.value["destinataire"] ?? " ";
+    let numeroColis = this.searchForm.value["numeroColis"] ?? " ";
+
+    if (expediteur || destinataire || numeroColis) {
+      this.colisFounded$ = this._colisService.rechercheColis(
+        numeroColis,
+        expediteur,
+        destinataire,
+        this.connectedUser.username
+      );
+      if (!this.colisFounded$) {
+        this.noResult = true;
+      } else this.noResult = false;
+    }
+  }
+
+  initChercherForms() {
+    this.searchForm = this._formBuilder.group({
+      numeroColis: [""],
+      expediteur: [""],
+      destinataire: [""],
+    });
   }
 
   public removeItem(item: any, list: any[]): void {

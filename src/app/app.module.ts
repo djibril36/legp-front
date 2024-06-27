@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, Validators } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { ProgressbarModule } from "ngx-bootstrap/progressbar";
@@ -25,6 +25,7 @@ import { RegisterpageComponent } from "./pages/content/registerpage/registerpage
 import { LandingpageComponent } from "./pages/content/landingpage/landingpage.component";
 import { RatingComponent } from "./utils/othersComponents/rating/rating.component";
 import { NgDragDropModule } from "ng-drag-drop";
+import { ErrorInterceptor } from "./utils/services/http-interceptors/error.interceptor.service";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,13 @@ import { NgDragDropModule } from "ng-drag-drop";
     // CarouselModule.forRoot(),
     // ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

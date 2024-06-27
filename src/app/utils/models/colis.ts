@@ -1,7 +1,22 @@
+import { Gp } from "./gp";
+
 export interface Colis {
-  numero: string;
+  // details colis
+  numero_colis: string;
   description: string;
+  montant: number;
   poids: number;
-  etat: string;
-  paye: any;
+  typeColis: string;
+  etatColis: string;
+  paye: boolean;
+  // expediteur
+  expediteur: string;
+  telephoneExp: string;
+  cinExp: string;
+  // destinataire
+  destinataire: string;
+  telephoneDest: string;
+  cinDest: string;
+  gp: Gp;
+  nom_gp: string;
 }

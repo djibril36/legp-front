@@ -18,44 +18,94 @@
               <h5 class="text-on-back">03</h5>
             </div> -->
             <div class="card-body">
-              <form>
+              <form [formGroup]="voyageForm">
                 <div class="row">
+                  <!-- ville de depart -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label> Ville dépot </label>
+                      <label> Ville départ </label>
                       <input
+                        [ngClass]="{
+                          'is-invalid': submitted && f.depart.errors
+                        }"
                         class="form-control"
                         type="text"
+                        formControlName="depart"
                         placeholder="Casablanca"
                       />
+                      <div
+                        *ngIf="submitted && f.depart.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.depart.errors.required">
+                          Ville de départ obligatoire
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <!-- Ville d arrivee -->
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label> Ville reception </label>
+                      <label> Ville arrivée </label>
                       <input
+                        [ngClass]="{
+                          'is-invalid': submitted && f.arrivee.errors
+                        }"
                         class="form-control"
                         placeholder="Dakar"
-                        type="type"
+                        type="text"
+                        formControlName="arrivee"
                       />
+                      <div
+                        *ngIf="submitted && f.arrivee.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.arrivee.errors.required">
+                          Ville arrivée obligatoire
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">
+                  <!-- kilos dispo pour le voyage -->
                   <div class="col-md-6">
                     <div class="form-group">
                       <label> Nbr de kilos dispo</label>
-                      <input class="form-control" type="number" value="50" />
+                      <input
+                        class="form-control"
+                        type="number"
+                        value="50"
+                        formControlName="kg_disponible"
+                      />
                     </div>
                   </div>
                   <div class="col-md-6">
+                    <!-- tarif : prix par kg -->
                     <div class="form-group">
                       <label> Tarif/kg </label>
-                      <input class="form-control" type="number" value="70" />
+                      <input
+                        [ngClass]="{
+                          'is-invalid': submitted && f.tarif.errors
+                        }"
+                        class="form-control"
+                        type="number"
+                        value="70"
+                        formControlName="tarif"
+                      />
+                      <div
+                        *ngIf="submitted && f.depart.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.tarif.errors.required">
+                          Tarif obligatoire
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
+                <!-- date voyage -->
                 <div>
                   <label>Date de départ</label>
                 </div>
@@ -69,29 +119,44 @@
                     </div>
                   </div>
                   <input
+                    [ngClass]="{
+                      'is-invalid': submitted && f.date_voyage.errors
+                    }"
                     bsDatepicker
                     class="form-control"
                     data-datepicker-color="success"
                     [bsConfig]="{
                       isAnimated: true,
                       containerClass: 'theme-red',
-                      dateInputFormat: 'DD-MM-YYYY'
+                      dateInputFormat: 'YYYY-MM-DD'
                     }"
-                    [bsValue]="bsValue"
                     [minDate]="minDate"
-                    (bsValueChange)="getDate($event)"
                     id="datepicker"
                     placeholder="Choisir une date"
                     (focus)="focus3 = true"
                     (blur)="focus3 = false"
+                    formControlName="date_voyage"
                   />
+                  <div
+                    *ngIf="submitted && f.date_voyage.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.date_voyage.errors.required">
+                      Date voyage obligatoire
+                    </div>
+                  </div>
                 </div>
 
+                <!-- Commetaire -->
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label> Commentaire </label>
-                      <input class="form-control" type="text" />
+                      <label>Commentaire </label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        formControlName="commentaire"
+                      />
                     </div>
                   </div>
                 </div>
@@ -99,6 +164,7 @@
                   class="btn btn-danger btn-round float-right"
                   placement="right"
                   type="submit"
+                  (click)="publierVoyage()"
                 >
                   Publiez
                 </button>
@@ -117,8 +183,7 @@
                   class="img-center img-fluid rounded-circle"
                   src="assets/img/mike.jpg"
                 />
-
-                <h4 class="title">MINA GP</h4>
+                <h4 class="title">{{ connectedUser.username | uppercase }}</h4>
               </div>
               <div class="card-body">
                 <tabset

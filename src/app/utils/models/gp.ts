@@ -1,7 +1,9 @@
 export interface Gp {
-  id: number;
-  prenom: string;
-  nom: string;
-  nomGp: string;
-  contacts: [];
+  id: any;
+  username?: string;
+  prenom?: string;
+  nom?: string;
+  nomGp?: string;
+  email?: string;
+  contacts?: [];
 }

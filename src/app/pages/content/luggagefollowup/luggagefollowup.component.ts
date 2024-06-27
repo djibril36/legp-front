@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { Bagage } from "src/app/utils/models/bagage";
+import { Colis } from "src/app/utils/models/colis";
 import { ColisService } from "src/app/utils/services/colis.service";
 
 @Component({
@@ -11,7 +12,7 @@ import { ColisService } from "src/app/utils/services/colis.service";
 export class LuggagefollowupComponent implements OnInit {
   isCollapsed = true;
   luggage_founded = false;
-  bagage$: Observable<Bagage[]> | undefined;
+  colis$: Observable<Colis[]> | undefined;
   bagage: Bagage;
   numero_colis: string = "";
   isErrornum: boolean; // pour un numero de colis incorrect
@@ -38,19 +39,19 @@ export class LuggagefollowupComponent implements OnInit {
     this.luggage_founded = false;
     this.isErrornum = null;
     this.numero_colis = null;
-    this.bagage$ = null;
+    this.colis$ = null;
   }
 
   displayLuggage() {
-    this.bagage$ = this.apiColis.findOneColis(this.numero_colis);
-    this.bagage$.subscribe((response) => {
-      let luggage: Bagage[];
+    this.colis$ = this.apiColis.findOneColis(this.numero_colis);
+    this.colis$.subscribe((response) => {
+      let luggage: Colis[];
       luggage = response;
       let tlug: number = luggage.length;
       if (tlug == 0) {
         this.isErrornum = true;
       }
-      if (tlug > 0 && this.bagage$ != null) {
+      if (tlug > 0 && this.colis$ != null) {
         this.luggage_founded = true;
       }
     });

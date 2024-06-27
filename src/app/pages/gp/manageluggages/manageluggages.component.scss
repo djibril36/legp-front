@@ -13,13 +13,13 @@
 
 
  
-  .row {
-    margin-bottom: 20px;
-  }
-  .row .row {
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
+  // .row {
+  //   margin-bottom: 20px;
+  // }
+  // .row .row {
+  //   margin-top: 10px;
+  //   margin-bottom: 0;
+  // }
   [class*="col-"] {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -50,3 +50,29 @@
     padding-left: 15px;
     
   }
+
+  .custom-margin {
+    margin-right: 10px;  
+  }
+ 
+  @media (max-width: 576px) { /* Petits écrans (tels que les téléphones) */
+    .custom-margin {
+      display: block; /* Affiche les boutons en bloc */
+      margin-right: 0;
+      margin-bottom: 10px; /* Espace entre les boutons en mode bloc */
+    }
+  }
+
+  .contain-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+
+  .text-centrer {
+    text-align: center;
+  }
+
+
+  

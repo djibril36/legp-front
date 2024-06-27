@@ -174,7 +174,7 @@
           </div>
           <div
             class="card card-coin card-plain"
-            *ngIf="luggage_founded && bagage$ | async as bagages"
+            *ngIf="luggage_founded && colis$ | async as colis"
           >
             <div class="card-header">
               <img
@@ -182,7 +182,7 @@
                 src="assets/img/bag.jpg"
               />
 
-              <h4 class="title">{{ bagages[0].numero }}</h4>
+              <h4 class="title">{{ colis[0].numero_colis }}</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -197,19 +197,19 @@
                   <tbody>
                     <tr>
                       <td>Desciption</td>
-                      <td>{{ bagages[0].description }}</td>
+                      <td>{{ colis[0].description }}</td>
                     </tr>
                     <tr>
                       <td>Etat collis</td>
-                      <td>{{ bagages[0].etat }}</td>
+                      <td>{{ colis[0].etatColis }}</td>
                     </tr>
                     <tr>
                       <td>Montat</td>
-                      <td>{{ bagages[0].montant }}/payé</td>
+                      <td>{{ colis[0].montant }}/payé</td>
                     </tr>
                     <tr>
                       <td>GP</td>
-                      <td>Mina GP</td>
+                      <td>{{ colis[0].nom_gp | uppercase }}</td>
                     </tr>
                   </tbody>
                 </table>

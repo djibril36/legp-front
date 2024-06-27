@@ -35,62 +35,136 @@
       </div>
     </div>
 
-    <div class="col-lg-8">
+    <div class="col-lg-8" [formGroup]="colisForm">
       <!-- <img class="img-fluid floating" src="assets/img/chester-wade.jpg" /> -->
       <hr class="line-success col-lg-4" />
 
       <!--________ETAPE 1_________  -->
       <div class="container" *ngIf="isStep1">
-        <div class="row">
+        <div class="row" *ngIf="voyages$ | async as voyages">
           <div class="col-md-8">
             <div class="form-group">
               <label> Sélectionnez le voyage correspondant </label>
-              <input class="form-control" type="text" placeholder="TR3497" />
+              <select
+                class="form-control select-option"
+                (change)="selectVoyage($event)"
+              >
+                <option>Sélectionner un voyage</option>
+                <option *ngFor="let voyage of voyages.reverse()">
+                  {{ voyage.date_voyage }} {{ voyage.ville_depart }}
+                  {{ voyage.ville_arrivee }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
         <label> Informations du colis </label>
         <tabset class="nav-tabs-danger justify-content-left tab-subcategories">
-          <tab heading="Pesable">
+          <tab
+            heading="Pesable"
+            [formGroup]="descriptionColisTab1Form"
+            (click)="changeTab1()"
+          >
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label> Poids du collis</label>
-                  <input class="form-control" type="number" value="5" />
+                  <label>Description</label>
+                  <input
+                    class="form-control"
+                    type="string"
+                    formControlName="descriptionp"
+                  />
+                  <!-- value="5"  -->
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label> Poids du colis(kg)</label>
+                  <input
+                    class="form-control"
+                    type="number"
+                    formControlName="poids"
+                  />
+                  <!-- value="5"  -->
+                </div>
+              </div>
+              <div class="col-md-7">
                 <div class="form-group">
                   <label> Montant </label>
-                  <input class="form-control" type="number" value="70" />
+                  <div class="row">
+                    <div class="col-7">
+                      <input
+                        class="form-control"
+                        type="number"
+                        formControlName="montantp"
+                      />
+                    </div>
+                    <div class="col-5" *ngIf="pays$ | async as pays">
+                      <select
+                        class="form-control select-option"
+                        (change)="selectDevise($event)"
+                      >
+                        <option>Monnaie</option>
+                        <option *ngFor="let p of pays">
+                          {{ p.devise }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </tab>
-          <tab heading="Papiers">
+          <tab
+            heading="Non Pesable"
+            [formGroup]="descriptionColisTab2Form"
+            (click)="changeTab2()"
+          >
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label> Nombre</label>
-                  <input class="form-control" type="number" value="5" />
+                  <label> Description</label>
+                  <input
+                    class="form-control"
+                    type="string"
+                    formControlName="descriptionnp"
+                  />
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label> Montant </label>
-                  <input class="form-control" type="number" value="70" />
+            </div>
+
+            <div class="form-group">
+              <label> Montant </label>
+              <div class="row">
+                <div class="col-5">
+                  <input
+                    class="form-control"
+                    type="number"
+                    formControlName="montantnp"
+                  />
+                </div>
+                <div class="col-4" *ngIf="pays$ | async as pays">
+                  <select
+                    class="form-control select-option"
+                    (change)="selectDevise($event)"
+                  >
+                    <option>Monnaie</option>
+                    <option *ngFor="let p of pays">
+                      {{ p.devise }}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
           </tab>
 
-          <tab heading="Valeur">
+          <!-- <tab heading="Valeur" [ngValue]="tab">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
                   <label> Preciser le type</label>
                   <select
-                    class="form-contro"
+                    class="form-control"
                     id="exampleFormControlSelect1"
                     style="background-color: aliceblue"
                   >
@@ -105,12 +179,13 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label> Montant </label>
-                  <input class="form-control" type="number" value="70" />
+                  <input class="form-control" type="number" />
+                
                 </div>
               </div>
             </div>
           </tab>
-          <tab heading="Autre">
+          <tab heading="Autre" [ngValue]="tab">
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
@@ -125,11 +200,11 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label> Montant </label>
-                  <input class="form-control" type="number" value="70" />
+                  <input class="form-control" type="number" />
                 </div>
               </div>
             </div>
-          </tab>
+          </tab> -->
         </tabset>
 
         <div class="col-lg-5">
@@ -143,9 +218,10 @@
                 <input
                   class="form-check-input"
                   id="exampleRadios1"
-                  name="exampleRadios"
+                  name="paye"
                   type="radio"
-                  value="option1"
+                  value="true"
+                  formControlName="paye"
                 />
 
                 <span class="form-check-sign"> </span> payé par l'expéditeur
@@ -157,12 +233,12 @@
             <div class="form-check form-check-radio">
               <label class="form-check-label">
                 <input
-                  checked="checked"
                   class="form-check-input"
                   id="exampleRadios1"
-                  name="exampleRadios"
+                  name="paye"
                   type="radio"
-                  value="option2"
+                  value="false"
+                  formControlName="paye"
                 />
 
                 <span class="form-check-sign"> </span> sera payé par le
@@ -171,10 +247,10 @@
             </div>
           </div>
         </div>
-
         <button
           class="btn btn-primary btn-icon btn-round mr-1 float-right"
           placement="right"
+          type="submit"
           (click)="toStep2()"
         >
           <i class="tim-icons icon-double-right"> </i>
@@ -183,33 +259,58 @@
       <!--____ ETAPE 2 : EXPEDITEUR___ -->
       <div class="container" *ngIf="isStep2">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="form-group">
               <label> Nom complet </label>
               <input
                 class="form-control"
                 type="text"
                 placeholder="Issakha DIOP"
+                formControlName="expediteur"
               />
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label> CIN </label>
-              <input class="form-control" placeholder="H3467Y" type="type" />
+              <label> CIN/Passeport/Séjour </label>
+              <input
+                class="form-control"
+                placeholder="H3467Y"
+                type="text"
+                formControlName="cinExp"
+              />
             </div>
           </div>
-          <div class="col-md-4">
+        </div>
+
+        <div class="row" *ngIf="pays$ | async as pays">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label> Indicatif </label>
+              <select
+                class="form-control select-option"
+                (change)="selectIndicatifExp($event)"
+              >
+                <option>Indicatif</option>
+                <option *ngFor="let p of pays">
+                  {{ p.indicatif }} {{ p.nom }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-5">
             <div class="form-group">
               <label> Téléphone </label>
               <input
                 class="form-control"
                 placeholder="0X XX XX XX XX"
                 type="tel"
+                formControlName="telephoneExp"
               />
             </div>
           </div>
         </div>
+
         <button
           class="btn btn-primary btn-icon btn-round mr-1 float-left"
           placement="left"
@@ -228,29 +329,57 @@
       <!--____ ETAPE 3 : DESTINATAIRE___ -->
       <div class="container" *ngIf="isStep3">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="form-group">
               <label> Nom complet </label>
-              <input class="form-control" type="text" placeholder="Sokhna KA" />
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Sokhna KA"
+                formControlName="destinataire"
+              />
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label> CIN </label>
-              <input class="form-control" placeholder="A5THY77" type="type" />
+              <input
+                class="form-control"
+                placeholder="A5THY77"
+                type="type"
+                formControlName="cinDest"
+              />
             </div>
           </div>
-          <div class="col-md-4">
+        </div>
+        <div class="row" *ngIf="pays$ | async as pays">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label> Indicatif </label>
+              <select
+                class="form-control select-option"
+                (change)="selectIndicatifDest($event)"
+              >
+                <option>Indicatif</option>
+                <option *ngFor="let p of pays">
+                  {{ p.indicatif }} {{ p.nom }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-5">
             <div class="form-group">
               <label> Téléphone </label>
               <input
                 class="form-control"
                 placeholder="0X XX XX XX XX"
                 type="tel"
+                formControlName="telephoneDest"
               />
             </div>
           </div>
         </div>
+
         <button
           class="btn btn-primary btn-icon btn-round mr-1 float-left"
           placement="left"
@@ -262,6 +391,7 @@
           class="btn btn-info btn-round float-right"
           placement="right"
           type="submit"
+          (click)="createColis()"
         >
           Enrégistrer
         </button>

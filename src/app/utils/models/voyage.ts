@@ -1,10 +1,11 @@
 export interface Voyage {
-  id: number;
-  dateDepart: any;
-  villeDepot: string;
-  villeRetrait: string;
+  id_voyage: string;
+  date_voyage: Date;
+  ville_depart: string;
+  ville_arrivee: number;
   kiloDispo: number;
-  tarifKilo: number;
-  nomGp : string;
-  contacts : string
+  tarif: number;
+  nomGp: string;
+  semaine: number;
+  commentaire: string;
 }

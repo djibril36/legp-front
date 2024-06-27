@@ -8,9 +8,16 @@ import { Voyage } from "../models/voyage";
 import { Observable, of, throwError } from "rxjs";
 import { retry, catchError, map } from "rxjs/operators";
 import { Entry } from "../models/entry";
+import { StorageService } from "./storage.service";
+import { RegisterService } from "./register.service";
+import { Pays } from "../models/pays";
 
-interface Response {
+interface responseVoyage {
   data: Entry<Voyage>[];
+}
+
+interface responsePays {
+  data: Entry<Pays>[];
 }
 
 @Injectable({
@@ -20,67 +27,78 @@ export class VoyageService {
   // Define API
   apiURL = "http://localhost:1337/api";
   error: HttpErrorResponse;
-  params : {};
-  constructor(private http: HttpClient) {}
- 
+  params: {};
+  constructor(
+    private http: HttpClient,
+    private _registerService: RegisterService
+  ) {}
 
-  // Http Options
-  httpOptions = {
-    headers: new HttpHeaders({
-      "Content-Type": "application/json",
-    }),
-  };
-
-  // => Fetch Voyages list
+  // => Fetch Voyages list pour les clients
   getVoyages(): Observable<Voyage> {
     return this.http
       .get<Voyage>(this.apiURL + "/voyages")
       .pipe(retry(1), catchError(this.handleError));
   }
 
-
   // trouver un voyage avec des parametres de recherches depart arrivee et date
-  findVoyages(villeDepot : string, villeRetrait : string, dateDepart : any) {
-  
-      this.params = {
-        params: {
-         "filters[villeDepot][$eq]": villeDepot,
-         "filters[villeRetrait][$eq]": villeRetrait,
-         "filters[dateDepart][$eq]": dateDepart,
-         populate: "*"
-        },
-       };
-    
-    return this.http
-      .get<Response>(this.apiURL + "/voyages", this.params)
-       .pipe(map((response) => response.data.map((x) => x.attributes)));
-  
-  }
-
-   // trouver les autres voyages de la semaine avec des parametres de recherches depart arrivee et date
-   findVoyagesOfWeek(villeDepot : string, villeRetrait : string, week : number) {
-  
+  findVoyages(villeDepot: string, villeRetrait: string, dateDepart: any) {
     this.params = {
       params: {
-       "filters[villeDepot][$eq]": villeDepot,
-       "filters[villeRetrait][$eq]": villeRetrait,
-       "filters[numeroSemaine][$eq]": week,
-       populate: "*"
+        "filters[villeDepot][$eq]": villeDepot,
+        "filters[villeRetrait][$eq]": villeRetrait,
+        "filters[dateDepart][$eq]": dateDepart,
+        populate: "*",
       },
-     };
-  
-  return this.http
-    .get<Response>(this.apiURL + "/voyages", this.params)
-     .pipe(map((response) => response.data.map((x) => x.attributes)));
+    };
 
-}
+    return this.http
+      .get<responseVoyage>(this.apiURL + "/voyages", this.params)
+      .pipe(map((response) => response.data.map((x) => x.attributes)));
+  }
 
- /** return this.http
+  // trouver les autres voyages de la semaine avec des parametres de recherches depart arrivee et date
+  findVoyagesOfWeek(villeDepot: string, villeRetrait: string, week: number) {
+    this.params = {
+      params: {
+        "filters[villeDepot][$eq]": villeDepot,
+        "filters[villeRetrait][$eq]": villeRetrait,
+        "filters[numeroSemaine][$eq]": week,
+        populate: "*",
+      },
+    };
+
+    return this.http
+      .get<responseVoyage>(this.apiURL + "/voyages", this.params)
+      .pipe(map((response) => response.data.map((x) => x.attributes)));
+  }
+
+  // recupere les voyages du Gp connecté
+  getVoyagesDuGp(nomGp) {
+    const params = {
+      params: {
+        "filters[nomGp][$eq]": nomGp,
+        populate: "*",
+      },
+    };
+    return this.http
+      .get<responseVoyage>(this.apiURL + "/voyages", params)
+      .pipe(map((response) => response.data.map((x) => x.attributes)));
+  }
+
+  getPays(): Observable<Pays[]> {
+    return this.http.get<responsePays>(this.apiURL + "/payss").pipe(
+      map((response) => response.data.map((x) => x.attributes)),
+      catchError(this.handleError)
+    );
+    // .pipe(retry(1), catchError(this.handleError));
+  }
+
+  /** return this.http
   .get<Response>(this.apiURL + "/coliss", {
     params: { "filters[numero][$eq]": colis_number },
   })
   .pipe(map((response) => response.data.map((x) => x.attributes)));
-}*/ 
+}*/
 
   handleError(error: HttpErrorResponse): Observable<never> {
     this.error = error;
@@ -93,30 +111,29 @@ export class VoyageService {
       .get<Voyage>(this.apiURL + "/voyages/" + id)
       .pipe(retry(1), catchError(this.handleError));
   }
+
   // HttpClient API post() method => Create Voyage
-  createVoyage(Voyage: any): Observable<Voyage> {
+  createVoyage(Voyage: {}, headers: {}): Observable<Voyage> {
     return this.http
-      .post<Voyage>(
-        this.apiURL + "/voyages",
-        JSON.stringify(Voyage),
-        this.httpOptions
-      )
+      .post<Voyage>(this.apiURL + "/voyages", Voyage, headers)
       .pipe(retry(1), catchError(this.handleError));
   }
+
   // HttpClient API put() method => Update Voyage
-  updateVoyage(id: any, Voyage: any): Observable<Voyage> {
+  updateVoyage(id: any, Voyage: any, headers: {}): Observable<Voyage> {
     return this.http
       .put<Voyage>(
         this.apiURL + "/voyages/" + id,
         JSON.stringify(Voyage),
-        this.httpOptions
+        headers
       )
       .pipe(retry(1), catchError(this.handleError));
   }
+
   // HttpClient API delete() method => Delete Voyage
-  deleteVoyage(id: any) {
+  deleteVoyage(id: any, headers) {
     return this.http
-      .delete<Voyage>(this.apiURL + "/Voyages/" + id, this.httpOptions)
+      .delete<Voyage>(this.apiURL + "/Voyages/" + id, headers)
       .pipe(retry(1), catchError(this.handleError));
   }
   // Error handling
