@@ -16,6 +16,7 @@ import { VoyageService } from "src/app/utils/services/voyage.service";
 export class GpprofilepageComponent implements OnInit {
   isCollapsed = true;
   submitted = false;
+  focus3: boolean;
   connectedUser: Utilisateur;
   voyageForm: FormGroup;
   currentToken: string;

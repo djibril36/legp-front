@@ -200,7 +200,7 @@
                       placeholder="Votre nom de GP"
                       type="text"
                       (focus)="focusnomGp = true"
-                      (blur)="focusnomGP = false"
+                      (blur)="focusnomGp = false"
                     />
                     <div
                       *ngIf="submitted && f.nomGp.errors"
@@ -301,9 +301,9 @@
                       class="form-control"
                       placeholder="Mot de passe **"
                       type="password"
-                      (focus)="focusEmailv = true"
-                      (blur)="focusEmailv = false"
                     />
+                    <!-- (focus)="focusEmail = true" -->
+                    <!-- (blur)="focusEmail = false" -->
                     <div
                       *ngIf="submitted && f.password.errors"
                       class="invalid-feedback"
@@ -334,7 +334,7 @@
                       class="form-control"
                       placeholder="Confirmer le mot de passe **"
                       type="password"
-                      (focus)="focuPassword = true"
+                      (focus)="focusPassword = true"
                       (blur)="focusPasswordv = false"
                     />
 

@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: "gp-managelug", component: ManageluggagesComponent },
   { path: "gp-managetrip", component: GpManagetripComponent },
 
-  { path: "client-trip", component: ClientTripComponent },
+  // { path: "client-trip", component: ClientTripComponent },
   { path: "own-clients", component: OwnClientsComponent },
 ];
 

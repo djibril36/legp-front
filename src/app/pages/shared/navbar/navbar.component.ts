@@ -15,6 +15,9 @@ export class NavbarComponent implements OnInit {
   identifier: string;
   password: string;
   isCollapsed = true;
+  focus1: boolean;
+  focus2: boolean;
+
   submitted: boolean = false;
   erroMessage: string = "Nom utlisateur ou mot de passe incorrect";
   isLoggedIn = false;
