@@ -1,10 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { environment } from "src/environments/environment";
 import { Utilisateur } from "../models/utilisateur";
 import { StorageService } from "./storage.service";
-import { catchError } from "rxjs/operators";
 import { AuthResponse } from "../models/auth-response";
 
 @Injectable({
@@ -13,6 +11,8 @@ import { AuthResponse } from "../models/auth-response";
 export class RegisterService {
   error: any | undefined;
   private url = `http://localhost:1337/api/auth/local`;
+  private apiProdURL =
+    "https://strapi-179132-0.cloudclusters.net/api/auth/local";
   private loginTracker = new BehaviorSubject(this.checkIfLoggedIn());
   loggedInStatus$ = this.loginTracker.asObservable();
   AuthResponse: Observable<AuthResponse>;
@@ -22,24 +22,6 @@ export class RegisterService {
     private _storageService: StorageService
   ) {}
 
-  // CREATION D'UN NOUVEAU USER GP
-  // async createGp(utilisateur) {
-  //   this.http
-  //     .post(this.apiURL, {
-  //       data: {
-  //         nom: utilisateur.nom,
-  //         prenom: utilisateur.prenom,
-  //         email: utilisateur.email,
-  //         password: utilisateur.password,
-  //         nom_gp: utilisateur.nom_gp,
-  //       },
-  //     })
-  //     .pipe(catchError((error) => this.handleError(error)))
-  //     .subscribe((response) => {
-  //       console.log("resgisterData" + JSON.stringify(response));
-  //     });
-  // }
-
   private handleError(error: HttpErrorResponse): Observable<never> {
     this.error = error.message;
     return of();
@@ -47,12 +29,12 @@ export class RegisterService {
 
   login(identifier: string, password: string) {
     return this.http
-      .post<AuthResponse>(this.url, { identifier, password })
+      .post<AuthResponse>(this.apiProdURL, { identifier, password })
       .pipe((response) => (this.AuthResponse = response));
   }
 
   register(username: string, email: string, password: string) {
-    return this.http.post<AuthResponse>(`${this.url}/register`, {
+    return this.http.post<AuthResponse>(`${this.apiProdURL}/register`, {
       username,
       email,
       password,

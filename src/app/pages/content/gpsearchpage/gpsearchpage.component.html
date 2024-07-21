@@ -110,7 +110,7 @@
   </div>
 </nav>
 <div class="wrapper">
-  <img class="path" src="assets/img/path1.png" />
+  <img class="path" src="/assets/img/path1.png" />
   <div class="space-50"></div>
   <div class="page-header" *ngIf="!displayResult">
     <div class="content">
@@ -122,7 +122,7 @@
             <div class="square square-8" id="square8"></div> -->
             <div class="card card-coin">
               <div class="card-header">
-                <img src="assets/img/word.png" />
+                <img src="/assets/img/word.png" />
               </div>
               <!-- <img
                     class="img-center img-fluid"
@@ -270,33 +270,44 @@
 
   <!--_________________________ RESULTATS DE LA RECHERCHE ___________________ -->
   <!--  -->
-  <div class="main"
-  *ngIf="displayResult" style="padding-top: 200px"
- >
-    <div class="section section-coins" >
-      <div class="container"  *ngIf="voyages$|async as voyages">
-  
-        <div class="row" *ngFor="let voyage of voyages; index as i" >
+  <div class="main" *ngIf="displayResult" style="padding-top: 200px">
+    <div class="section section-coins">
+      <div class="container" *ngIf="voyages$ | async as voyages">
+        <div class="row" *ngFor="let voyage of voyages; index as i">
           <div class="col-md-3">
             <div class="card card-coin card-plain">
               <div class="card-header">
-                <img class="img-center img-fluid" src="assets/img/8bag.png" />
+                <img class="img-center img-fluid" src="/assets/img/8bag.png" />
               </div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-12 text-center">
-                    <h4 class="text-uppercase">{{voyage.nomGp}}</h4>
-                    <span> {{voyage.villeDepot}} vers {{voyage.villeRetrait}}</span>
+                    <h4 class="text-uppercase">{{ voyage.nomGp }}</h4>
+                    <span>
+                      {{ voyage.villeDepot }} vers
+                      {{ voyage.villeRetrait }}</span
+                    >
                     <hr class="line-success" />
                   </div>
                 </div>
                 <div class="row">
                   <ul class="list-group">
-                    <li class="list-group-item">{{voyage.kiloDispo}} Kg disponibles</li>
-                    <li class="list-group-item">Tarif : {{voyage.tarifKilo}}/kg</li>
-                    <li class="list-group-item">Départ : {{voyage.dateDepart |  date:'EEEE, MMMM d, y' }}</li>
-                    <li class="list-group-item">Adresse depot : {{voyage.adresseDepot}}</li>
-                    <li class="list-group-item">Adresse Retrait : {{voyage.adresseRetrait}}</li>
+                    <li class="list-group-item">
+                      {{ voyage.kiloDispo }} Kg disponibles
+                    </li>
+                    <li class="list-group-item">
+                      Tarif : {{ voyage.tarifKilo }}/kg
+                    </li>
+                    <li class="list-group-item">
+                      Départ :
+                      {{ voyage.dateDepart | date : "EEEE, MMMM d, y" }}
+                    </li>
+                    <li class="list-group-item">
+                      Adresse depot : {{ voyage.adresseDepot }}
+                    </li>
+                    <li class="list-group-item">
+                      Adresse Retrait : {{ voyage.adresseRetrait }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -309,7 +320,7 @@
                 </button>
               </div>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
 

@@ -51,28 +51,6 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  // logOn() {
-  //   const credentials = this.registerForm.value;
-  //   this.loginSub = this.auth
-  //     .login(credentials.email, credentials.password)
-  //     .subscribe(
-  //       (resp) => {
-  //         this.registerForm.reset();
-
-  //         this.auth.persistUser(resp);
-
-  //         this.toast.showSuccess("Successfully logged in.");
-
-  //         const attemptedRoute = this._storageService.getItem("attemptedRoute");
-  //         this._storageService.removeItem("attemptedRoute");
-  //         this.router.navigateByUrl(attemptedRoute || "/gp-profile");
-  //       },
-  //       () => {
-  //         this.toast.showDanger("Login unsuccessful. Check your credentials.");
-  //       }
-  //     );
-  // }
-
   async logOn() {
     this.submitted = true;
     if (this.registerForm.valid) {

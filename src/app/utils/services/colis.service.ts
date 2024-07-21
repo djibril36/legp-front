@@ -20,6 +20,7 @@ interface Response {
 export class ColisService {
   // Define API
   apiURL = "http://localhost:1337/api";
+  apiProdURL = "https://strapi-179132-0.cloudclusters.net/api";
   error: HttpErrorResponse;
 
   constructor(private http: HttpClient) {}
@@ -41,7 +42,7 @@ export class ColisService {
     nom_gp: string
   ) {
     return this.http
-      .get<Response>(this.apiURL + "/coliss", {
+      .get<Response>(this.apiProdURL + "/coliss", {
         params: {
           "filters[numero_colis][$contains]": colis_number,
           "filters[expediteur][$contains]": expediteur,
@@ -54,7 +55,7 @@ export class ColisService {
 
   createColis(Colis: {}, headers: {}): Observable<Colis> {
     return this.http
-      .post<Colis>(this.apiURL + "/coliss", Colis, headers)
+      .post<Colis>(this.apiProdURL + "/coliss", Colis, headers)
       .pipe(retry(1), catchError(this.handleError));
   }
 
@@ -68,7 +69,7 @@ export class ColisService {
       },
     };
     return this.http
-      .get<Response>(this.apiURL + "/coliss", params)
+      .get<Response>(this.apiProdURL + "/coliss", params)
       .pipe(map((response) => response.data.map((x) => x.attributes)));
   }
 
