@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { Utilisateur } from "../models/utilisateur";
@@ -13,6 +17,7 @@ export class RegisterService {
   private url = `http://localhost:1337/api/auth/local`;
   private apiProdURL =
     "https://strapi-179132-0.cloudclusters.net/api/auth/local";
+
   private loginTracker = new BehaviorSubject(this.checkIfLoggedIn());
   loggedInStatus$ = this.loginTracker.asObservable();
   AuthResponse: Observable<AuthResponse>;
@@ -77,7 +82,10 @@ export class RegisterService {
 
   getAuthHeader() {
     return {
-      headers: { Authorization: `Bearer ${this.getPersistedToken()}` },
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.getPersistedToken()}`,
+      }),
     };
   }
 }

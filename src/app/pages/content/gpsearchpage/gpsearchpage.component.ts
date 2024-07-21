@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 })
 export class GpsearchpageComponent implements OnInit {
   [x: string]: any;
-  isCollapsed = false;
+  isCollapsed = true;
   focus;
   focus1;
   focus2;
@@ -24,9 +24,9 @@ export class GpsearchpageComponent implements OnInit {
   selectedDepart: string;
   selectedArrivee: string;
   selectedDate: any;
-  sendedDate : any;
+  sendedDate: any;
   minDate = new Date();
-  weekNumber : number;
+  weekNumber: number;
 
   isSenegal: boolean = false;
   isMaroc: boolean = false;
@@ -42,7 +42,6 @@ export class GpsearchpageComponent implements OnInit {
 
   constructor(public apiVoyage: VoyageService) {}
   ngOnInit() {
-  
     var body = document.getElementsByTagName("body")[0];
     body.classList.add("register-page");
     this.selectedDepart = null;
@@ -64,63 +63,68 @@ export class GpsearchpageComponent implements OnInit {
   }
 
   SelectedArrivees(value: string): void {
-    this.selectedArrivee = this.arrivees.nativeElement.value;   
+    this.selectedArrivee = this.arrivees.nativeElement.value;
   }
 
   getDate(dateV: Date) {
     this.selectedDate = formatDate(dateV, "DD-MM-YYYY");
     this.sendedDate = formatDate(dateV, "YYYY-MM-DD");
-   this.weekNumber = parseInt(formatDate(dateV, "w"));
-
+    this.weekNumber = parseInt(formatDate(dateV, "w"));
   }
 
   /**_______RECHERCHER UN VOYAGE DATE-DEPART-ARRIVEE ______ */
   findVoyages() {
-    if(this.selectedDepart == null || this.selectedArrivee  == null){
+    if (this.selectedDepart == null || this.selectedArrivee == null) {
       console.log("aucune date choisie");
     }
-    
-if(this.SelectedDepart != null && this.selectedArrivee  != null){
-    this.voyages$ = this.apiVoyage.findVoyages(this.selectedDepart,this.selectedArrivee,this.sendedDate);
-    this.voyages$.subscribe((response) => {
-      console.log("response " + response);
-      let voyages: Voyage[];
-      voyages = response;
-      let tvoy: number = voyages.length; 
-      if (tvoy > 0 && this.voyages$ != null) {
-        this.voyage_founded = true;
-        this.displayResult = true;
-      }  
-      if (tvoy == 0) {
-        this.isErrornum = true;
-        console.log("AUCUN VOYAGE TROUVE");
-        this.findVoyagesOfWeek() ;
-      }
-     
-    }); 
-  } 
-  }
 
-    /**_______RECHERCHER UN VOYAGE SEMAINE-DEPART-ARRIVEE 
-             * SI AUCUN VOYAE EST TROUVEE A LA DATRE SOUHAITEE ______ */
-    findVoyagesOfWeek() {
-      this.voyages$ = this.apiVoyage.findVoyagesOfWeek(this.selectedDepart,this.selectedArrivee,this.weekNumber);
+    if (this.SelectedDepart != null && this.selectedArrivee != null) {
+      this.voyages$ = this.apiVoyage.findVoyages(
+        this.selectedDepart,
+        this.selectedArrivee,
+        this.sendedDate
+      );
       this.voyages$.subscribe((response) => {
         console.log("response " + response);
         let voyages: Voyage[];
         voyages = response;
-        let tvoy: number = voyages.length; 
-        if (tvoy == 0) {
-          this.isErrornum = true;
-          console.log("AUCUN VOYAGE TROUVE")
-        }
+        let tvoy: number = voyages.length;
         if (tvoy > 0 && this.voyages$ != null) {
           this.voyage_founded = true;
           this.displayResult = true;
-        }  
-      }); 
-     
+        }
+        if (tvoy == 0) {
+          this.isErrornum = true;
+          console.log("AUCUN VOYAGE TROUVE");
+          this.findVoyagesOfWeek();
+        }
+      });
     }
+  }
+
+  /**_______RECHERCHER UN VOYAGE SEMAINE-DEPART-ARRIVEE
+   * SI AUCUN VOYAE EST TROUVEE A LA DATRE SOUHAITEE ______ */
+  findVoyagesOfWeek() {
+    this.voyages$ = this.apiVoyage.findVoyagesOfWeek(
+      this.selectedDepart,
+      this.selectedArrivee,
+      this.weekNumber
+    );
+    this.voyages$.subscribe((response) => {
+      console.log("response " + response);
+      let voyages: Voyage[];
+      voyages = response;
+      let tvoy: number = voyages.length;
+      if (tvoy == 0) {
+        this.isErrornum = true;
+        console.log("AUCUN VOYAGE TROUVE");
+      }
+      if (tvoy > 0 && this.voyages$ != null) {
+        this.voyage_founded = true;
+        this.displayResult = true;
+      }
+    });
+  }
 
   goSearch() {
     this.displayResult = false;
@@ -191,10 +195,9 @@ if(this.SelectedDepart != null && this.selectedArrivee  != null){
   //     "deg)";
   // }
 
-
-  getGpcontact(i){
+  getGpcontact(i) {
     console.log("index " + i);
     let nomGp = this.voyages$[i];
-    console.log("nomGP " + nomGp );
+    console.log("nomGP " + nomGp);
   }
 }

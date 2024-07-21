@@ -24,7 +24,6 @@ import { ProfilepageComponent } from "./pages/content/profilepage/profilepage.co
 import { RegisterpageComponent } from "./pages/content/registerpage/registerpage.component";
 import { LandingpageComponent } from "./pages/content/landingpage/landingpage.component";
 import { RatingComponent } from "./utils/othersComponents/rating/rating.component";
-import { NgDragDropModule } from "ng-drag-drop";
 import { ErrorInterceptor } from "./utils/services/http-interceptors/error.interceptor.service";
 
 @NgModule({
@@ -41,7 +40,6 @@ import { ErrorInterceptor } from "./utils/services/http-interceptors/error.inter
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    NgDragDropModule,
     RouterModule,
     AppRoutingModule,
     // BsDropdownModule.forRoot(),

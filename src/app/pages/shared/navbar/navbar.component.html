@@ -53,15 +53,25 @@
 
       <ul class="navbar-nav">
         <li class="nav-item p-0">
-          <a class="nav-link" [routerLink]="['/register']">
+          <a class="nav-link" *ngIf="!isLoggedIn" [routerLink]="['/register']">
             <i class="tim-icons icon-badge"> </i> S'inscrire
           </a>
         </li>
 
         <li class="nav-item">
           <!-- btn btn-default d-none d-lg-block -->
-          <a class="nav-link" data-target="#myModal2" (click)="myModal2.show()">
+          <a
+            class="nav-link"
+            data-target="#myModal2"
+            *ngIf="!isLoggedIn"
+            (click)="myModal2.show()"
+          >
             <i class="tim-icons icon-single-02"> </i> Se connecter
+          </a>
+        </li>
+        <li class="nav-item p-0">
+          <a class="nav-link" *ngIf="isLoggedIn" [routerLink]="['/gp-profile']">
+            <i class="tim-icons icon-badge"> </i> Mon profil
           </a>
         </li>
 
@@ -101,7 +111,7 @@
             <p class="d-lg-none d-xl-none">Instagram</p>
           </a>
         </li>
-        <li class="dropdown nav-item" dropdown>
+        <!-- <li class="dropdown nav-item" dropdown>
           <a
             class="dropdown-toggle nav-link dropdown-toggle"
             data-toggle="dropdown"
@@ -127,6 +137,12 @@
               <i class="tim-icons icon-single-02"> </i>
             </a>
           </div>
+        </li> -->
+        <li class="nav-item">
+          <!-- btn btn-default d-none d-lg-block -->
+          <a class="nav-link" *ngIf="isLoggedIn" (click)="logOut()">
+            <i class="tim-icons icon-single-02"> </i> Déconnecter
+          </a>
         </li>
       </ul>
     </div>
@@ -180,7 +196,7 @@
   </div>
 </div>
 
-<!--_____________________ CONNEXION_________________  -->
+<!--_____________________ CONNEXION MODAL_________________  -->
 
 <div
   aria-hidden="true"
@@ -301,6 +317,7 @@
             <button
               class="btn btn-primary my-4"
               type="button"
+              *ngIf="!isLoggedIn"
               (click)="logOn()"
             >
               Se connecter

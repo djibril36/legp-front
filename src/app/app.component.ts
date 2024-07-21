@@ -3,20 +3,23 @@ import {
   OnInit,
   Renderer2,
   HostListener,
-  Inject
+  Inject,
 } from "@angular/core";
 import { Location } from "@angular/common";
 import { DOCUMENT } from "@angular/common";
+import { RegisterService } from "./utils/services/register.service";
+import { Utilisateur } from "./utils/models/utilisateur";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     public location: Location,
+    private _registerService: RegisterService,
     @Inject(DOCUMENT) document
   ) {}
   @HostListener("window:scroll", ["$event"])
@@ -36,6 +39,17 @@ export class AppComponent implements OnInit {
     }
   }
   ngOnInit() {
+    let currentUser: Utilisateur = this._registerService.getConnectedUser();
     this.onWindowScroll(event);
+    let context = this;
+    window.addEventListener("beforeunload", function (e) {
+      if (currentUser) {
+        context.logoutOnClose();
+      }
+    });
+  }
+
+  logoutOnClose() {
+    this._registerService.logout();
   }
 }

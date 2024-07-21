@@ -8,7 +8,6 @@ import { Colis } from "../models/colis";
 import { Observable, of, throwError } from "rxjs";
 import { retry, catchError, map } from "rxjs/operators";
 import { Entry } from "../models/entry";
-import { Bagage } from "../models/bagage";
 
 interface Response {
   data: Entry<Colis>[];

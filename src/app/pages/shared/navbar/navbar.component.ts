@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { RegisterService } from "src/app/utils/services/register.service";
 import { ToastService } from "src/app/utils/services/toast.service";
+import { StorageService } from "src/app/utils/services/storage.service";
 
 @Component({
   selector: "app-navbar",
@@ -29,8 +30,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
-    private toast: ToastService,
+    private _router: Router,
+    private _storageService: StorageService,
+    private _toast: ToastService,
     private _registerService: RegisterService
   ) {}
 
@@ -45,6 +47,18 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authStatus = this._registerService.loggedInStatus$.subscribe(
+      (status) => {
+        this.isLoggedIn = status;
+
+        if (status) {
+          this.username = this._registerService.getConnectedUser().username;
+          this.avatarInitial = this.username[0] || "Q";
+        }
+      }
+    );
+
+    // init logIn form
     this.registerForm = this.formBuilder.group({
       identifier: ["", Validators.required],
       password: ["", Validators.required],
@@ -63,15 +77,25 @@ export class NavbarComponent implements OnInit {
           next: (authresponse) => {
             this.registerForm.reset();
             this._registerService.persistUser(authresponse);
-            this.router.navigateByUrl("/gp-profile");
+            const attemptedRoute =
+              this._storageService.getItem("attemptedRoute");
+            this._storageService.removeItem("attemptedRoute");
+            this._router.navigateByUrl(attemptedRoute || "/");
+            this._router.navigateByUrl("/gp-profile");
           },
           error: (error) => {
             this.erroMessage;
-            this.toast.showDanger(
+            this._toast.showDanger(
               "Login unsuccessful. Check your credentials."
             );
           },
         });
     }
+  }
+
+  logOut() {
+    this._registerService.logout();
+    this._toast.showSuccess("Successfully logged out.");
+    this._router.navigateByUrl("/");
   }
 }

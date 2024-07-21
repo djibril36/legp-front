@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { Bagage } from "src/app/utils/models/bagage";
 import { Colis } from "src/app/utils/models/colis";
 import { ColisService } from "src/app/utils/services/colis.service";
 
@@ -13,7 +12,6 @@ export class LuggagefollowupComponent implements OnInit {
   isCollapsed = true;
   luggage_founded = false;
   colis$: Observable<Colis[]> | undefined;
-  bagage: Bagage;
   numero_colis: string = "";
   isErrornum: boolean; // pour un numero de colis incorrect
 
@@ -26,7 +24,6 @@ export class LuggagefollowupComponent implements OnInit {
     var body = document.getElementsByTagName("body")[0];
     body.classList.add("profile-page");
     this.numero_colis = null;
-    this.bagage = null;
     this.luggage_founded = false;
   }
   ngOnDestroy() {
@@ -53,12 +50,12 @@ export class LuggagefollowupComponent implements OnInit {
       }
       if (tlug > 0 && this.colis$ != null) {
         this.luggage_founded = true;
+        this.numero_colis = null;
       }
     });
   }
 
   countStar(star) {
     this.selectedValue = star;
-    console.log("Value of star", star);
   }
 }

@@ -18,18 +18,21 @@ import { ClientTripComponent } from "./pages/client/client-trip/client-trip.comp
 import { GpManagetripComponent } from "./pages/gp/gp-managetrip/gp-managetrip.component";
 import { RatingComponent } from "./utils/othersComponents/rating/rating.component";
 import { OwnClientsComponent } from "./pages/gp/own-clients/own-clients.component";
+import { LoggedInGuard } from "./core/guards/logged-in.guard";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: IndexComponent },
-  { path: "profile", component: ProfilepageComponent },
   { path: "register", component: RegisterpageComponent },
   { path: "landing", component: LandingpageComponent },
   { path: "gpsearch", component: GpsearchpageComponent },
   { path: "followup", component: LuggagefollowupComponent },
-  { path: "test", component: TestComponent },
   { path: "login", component: LoginComponent },
-  { path: "gp-profile", component: GpprofilepageComponent },
+  {
+    path: "gp-profile",
+    canActivate: [LoggedInGuard],
+    component: GpprofilepageComponent,
+  },
   { path: "gp-createlug", component: CreateluggageComponent },
   { path: "gp-managelug", component: ManageluggagesComponent },
   { path: "gp-managetrip", component: GpManagetripComponent },

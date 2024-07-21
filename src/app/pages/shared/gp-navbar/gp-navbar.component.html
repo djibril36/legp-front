@@ -66,18 +66,49 @@
             >Mes clients
           </a>
         </li>
-        <li class="nav-item">
-          <!-- <i class="tim-icons icon-settings-gear-63"></i> -->
 
-          <!-- <img src="assets/img/word.png" /> -->
-
-          <a class="nav-link" [routerLink]="['//gp-profile']">
+        <li class="dropdown nav-item" dropdown>
+          <a
+            class="dropdown-toggle nav-link dropdown-toggle"
+            data-toggle="dropdown"
+            dropdownToggle
+            href="javascript:void(0)"
+          >
             <i>
               <img class="custom-icon" src="assets/img/user.png" />
             </i>
             Mon compte
           </a>
+          <div
+            class="dropdown-menu dropdown-with-icons select-option"
+            *dropdownMenu
+          >
+            <a class="dropdown-item" [routerLink]="['/gp-profile']">
+              <i class="tim-icons icon-paper"> </i>Espace e-GP
+            </a>
+            <a class="dropdown-item" [routerLink]="['/register']">
+              <i class="tim-icons icon-bullet-list-67"> </i>Modifier profil
+            </a>
+            <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logOut()">
+              <i class="tim-icons icon-upload"> </i> Déconnecter
+            </a>
+          </div>
         </li>
+
+        <!-- <div class="d-flex flex-row vw-95 justify-content-between align-items-center mx-auto mt-2">
+          <h3 routerLink="/" class="font-weight-bold">Quiz<span class="font-weight-light">App</span></h3>
+          <div class="d-flex align-items-center">
+              <div class="rounded-circle bg-success text-white avatar mr-2 d-flex align-items-center justify-content-center"
+                  *ngIf="isLoggedIn" placement="left" ngbTooltip="Scores for {{username}}" routerLink="/scores">
+                  <h3 class="avatar-text">{{avatarInitial | uppercase}}</h3>
+              </div>
+              <button routerLink="/auth/signup" type="button" class="m-1 btn app-bg-grey btn-sm" *ngIf="!isLoggedIn">Sign
+                  Up</button>
+              <button routerLink="/auth/login" type="button" class="m-1 btn app-bg-grey btn-sm"
+                  *ngIf="!isLoggedIn">Login</button>
+              <button (click)="logout()" type="button" class="m-1 btn app-bg-grey btn-sm" *ngIf="isLoggedIn">Logout</button>
+          </div>
+      </div> -->
 
         <!-- <li class="nav-item">
           <a

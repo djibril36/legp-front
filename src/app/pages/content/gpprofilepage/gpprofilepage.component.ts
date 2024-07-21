@@ -47,14 +47,14 @@ export class GpprofilepageComponent implements OnInit {
           date_voyage: this.voyageForm.value["date_voyage"],
           ville_depart: this.voyageForm.value["depart"],
           ville_arrivee: this.voyageForm.value["arrivee"],
-          kiloDispo: this.voyageForm.value["kg_disponible"] || 100,
+          kilo_dispo: this.voyageForm.value["kg_disponible"] || 100,
           tarif: this.voyageForm.value["tarif"],
-          nomGp: this.connectedUser.username,
+          nom_gp: this.connectedUser.username,
           semaine: 40,
           commentaire: this.voyageForm.value["commentaire"] || " ",
         },
       };
-      this._voyageService.createVoyage(newVoyage, this.httpOptions).subscribe({
+      this._voyageService.createVoyage(newVoyage).subscribe({
         next: () => {
           this.voyageForm.reset();
           this._router.navigateByUrl("/gp-managetrip");

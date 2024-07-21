@@ -5,6 +5,7 @@ import { Observable, of, throwError } from "rxjs";
 import { retry, catchError, map } from "rxjs/operators";
 import { Entry } from "../models/entry";
 import { Pays } from "../models/pays";
+import { RegisterService } from "./register.service";
 
 interface responseVoyage {
   data: Entry<Voyage>[];
@@ -23,9 +24,12 @@ export class VoyageService {
   private apiProdURL = "https://strapi-179132-0.cloudclusters.net/api";
   error: HttpErrorResponse;
   params: {};
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private _registerService: RegisterService
+  ) {}
 
-  // => Fetch Voyages list pour les clients
+  // Voyages list pour les clients
   getVoyages(): Observable<Voyage> {
     return this.http
       .get<Voyage>(this.apiProdURL + "/voyages")
@@ -68,7 +72,7 @@ export class VoyageService {
   getVoyagesDuGp(nomGp) {
     const params = {
       params: {
-        "filters[nomGp][$eq]": nomGp,
+        "filters[nom_gp][$eq]": nomGp,
         populate: "*",
       },
     };
@@ -97,27 +101,34 @@ export class VoyageService {
   }
 
   // HttpClient API post() method => Create Voyage
-  createVoyage(Voyage: {}, headers: {}): Observable<Voyage> {
+  createVoyage(Voyage: {}): Observable<Voyage> {
     return this.http
-      .post<Voyage>(this.apiProdURL + "/voyages", Voyage, headers)
+      .post<Voyage>(
+        this.apiProdURL + "/voyages",
+        Voyage,
+        this._registerService.getAuthHeader()
+      )
       .pipe(retry(1), catchError(this.handleError));
   }
 
   // HttpClient API put() method => Update Voyage
-  updateVoyage(id: any, Voyage: any, headers: {}): Observable<Voyage> {
+  updateVoyage(id: any, Voyage: any): Observable<Voyage> {
     return this.http
       .put<Voyage>(
         this.apiProdURL + "/voyages/" + id,
         JSON.stringify(Voyage),
-        headers
+        this._registerService.getAuthHeader()
       )
       .pipe(retry(1), catchError(this.handleError));
   }
 
   // HttpClient API delete() method => Delete Voyage
-  deleteVoyage(id: any, headers) {
+  deleteVoyage(id: any) {
     return this.http
-      .delete<Voyage>(this.apiProdURL + "/Voyages/" + id, headers)
+      .delete<Voyage>(
+        this.apiProdURL + "/Voyages/" + id,
+        this._registerService.getAuthHeader()
+      )
       .pipe(retry(1), catchError(this.handleError));
   }
 }
