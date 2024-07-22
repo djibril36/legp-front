@@ -8,6 +8,7 @@ import { Colis } from "../models/colis";
 import { Observable, of, throwError } from "rxjs";
 import { retry, catchError, map } from "rxjs/operators";
 import { Entry } from "../models/entry";
+import { RegisterService } from "./register.service";
 
 interface Response {
   data: Entry<Colis>[];
@@ -22,7 +23,10 @@ export class ColisService {
   apiProdURL = "https://strapi-179132-0.cloudclusters.net/api";
   error: HttpErrorResponse;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private _registerService: RegisterService
+  ) {}
 
   /*___SUIVRE UN COLIS VIA NUMBER___*/
   findOneColis(colis_number: string) {
@@ -52,9 +56,13 @@ export class ColisService {
       .pipe(map((response) => response.data.map((x) => x.attributes)));
   }
 
-  createColis(Colis: {}, headers: {}): Observable<Colis> {
+  createColis(Colis: {}): Observable<Colis> {
     return this.http
-      .post<Colis>(this.apiProdURL + "/coliss", Colis, headers)
+      .post<Colis>(
+        this.apiProdURL + "/coliss",
+        Colis,
+        this._registerService.getAuthHeader()
+      )
       .pipe(retry(1), catchError(this.handleError));
   }
 

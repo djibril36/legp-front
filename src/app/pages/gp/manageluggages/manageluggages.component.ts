@@ -15,6 +15,7 @@ export class ManageluggagesComponent implements OnInit {
   isCollapsed = true;
   isSearchOpened = false;
   noResult = false;
+  showTable = false;
   connectedUser: Utilisateur;
   searchForm: FormGroup;
   colis$: Observable<Colis[]> | null;
@@ -49,6 +50,11 @@ export class ManageluggagesComponent implements OnInit {
         this.connectedUser.username
       );
     }
+    this.colis$.subscribe((res) => {
+      if (res != null) {
+        this.showTable = true;
+      }
+    });
   }
 
   searchColis() {

@@ -87,7 +87,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-12">
           <div class="table-responsive">
-            <table class="table tablesorter" id="plain-table">
+            <table class="table tablesorter" id="plain-table" *ngIf="showTable">
               <thead>
                 <tr>
                   <th>
@@ -163,7 +163,6 @@
                     >
                       <i class="tim-icons icon-pencil"></i>
                     </button>
-
                     <button
                       type="button"
                       rel="tooltip"

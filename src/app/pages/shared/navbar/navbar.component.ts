@@ -50,7 +50,6 @@ export class NavbarComponent implements OnInit {
     this.authStatus = this._registerService.loggedInStatus$.subscribe(
       (status) => {
         this.isLoggedIn = status;
-
         if (status) {
           this.username = this._registerService.getConnectedUser().username;
           this.avatarInitial = this.username[0] || "Q";

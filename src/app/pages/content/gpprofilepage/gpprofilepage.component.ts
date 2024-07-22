@@ -52,6 +52,7 @@ export class GpprofilepageComponent implements OnInit {
           nom_gp: this.connectedUser.username,
           semaine: 40,
           commentaire: this.voyageForm.value["commentaire"] || " ",
+          nombre_de_colis: 0,
         },
       };
       this._voyageService.createVoyage(newVoyage).subscribe({

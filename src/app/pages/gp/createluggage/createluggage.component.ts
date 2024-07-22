@@ -58,13 +58,6 @@ export class CreateluggageComponent implements OnInit {
       this.colisForm.value["cinDest"] &&
       this.colisForm.value["telephoneDest"]
     ) {
-      this.currentToken = this._registerService.getPersistedToken();
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.currentToken}`,
-        }),
-      };
       const newColis = {
         data: {
           numero_colis: this.generateNumberColis(),
@@ -81,11 +74,11 @@ export class CreateluggageComponent implements OnInit {
           etatColis: "voyage en cours",
           destinataire: this.colisForm.value["destinataire"],
           voyage_details: this.voyageSelected,
-          gp: this.connectedUser,
+          // gp: this.connectedUser,
           nom_gp: this.connectedUser.username,
         },
       };
-      this._colisService.createColis(newColis, this.httpOptions).subscribe({
+      this._colisService.createColis(newColis).subscribe({
         next: () => {
           this._router.navigateByUrl("/gp-managelug");
         },

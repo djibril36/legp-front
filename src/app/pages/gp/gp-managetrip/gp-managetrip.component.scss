@@ -2,3 +2,14 @@
     width: 25px;
     height: 25px;
 }
+.custom-margin {
+    margin-right: 10px;  
+  }
+ 
+  @media (max-width: 576px) { /* Petits écrans (tels que les téléphones) */
+    .custom-margin {
+      display: block; /* Affiche les boutons en bloc */
+      margin-right: 0;
+      margin-bottom: 10px; /* Espace entre les boutons en mode bloc */
+    }
+  }

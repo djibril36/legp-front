@@ -1,13 +1,8 @@
 /*
 =========================================================
-* BLK Design System Angular - v1.2.0
+* LE GP
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/blk-design-system-angular
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT
-
-* Coded by Creative Tim
 
 =========================================================
 
@@ -26,4 +21,4 @@ if (environment.production) {
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));

@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     this.onWindowScroll(event);
     let context = this;
     window.addEventListener("beforeunload", function (e) {
-      if (currentUser) {
+      if (!currentUser) {
         context.logoutOnClose();
       }
     });

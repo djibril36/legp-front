@@ -88,7 +88,7 @@
                   <th>Date voyage</th>
                   <th>Ville départ</th>
                   <th>Ville arrivée</th>
-                  <th>Tarif</th>
+
                   <!-- <th class="text-right">Actions</th> -->
                 </tr>
               </thead>
@@ -97,14 +97,16 @@
                   <td>{{ voyage.date_voyage }}</td>
                   <td>{{ voyage.ville_depart }}</td>
                   <td>{{ voyage.ville_arrivee }}</td>
-                  <td>{{ voyage.tarif }}</td>
-                  <td>
+                  <td>{{ voyage.nombre_de_colis }}</td>
+                  <td class="align-items-center">
                     <button
                       type="button"
                       rel="tooltip"
-                      class="btn btn-success btn-simple btn-icon btn-sm"
+                      class="btn btn-success btn-simple btn-icon btn-sm custom-margin"
+                      data-target="#myModal2"
+                      (click)="myModal2.show()"
                     >
-                      <i class="tim-icons icon-settings-gear-63"></i>
+                      <i class="tim-icons icon-pencil"></i>
                     </button>
                     <button
                       type="button"
