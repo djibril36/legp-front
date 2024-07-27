@@ -11,14 +11,14 @@ import { ColisService } from "src/app/utils/services/colis.service";
 export class LuggagefollowupComponent implements OnInit {
   isCollapsed = true;
   luggage_founded = false;
-  colis$: Observable<Colis[]> | undefined;
+  colis$: Observable<Colis> | undefined;
   numero_colis: string = "";
   isErrornum: boolean; // pour un numero de colis incorrect
 
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue: number;
 
-  constructor(public apiColis: ColisService) {}
+  constructor(public _colisService: ColisService) {}
 
   ngOnInit() {
     var body = document.getElementsByTagName("body")[0];
@@ -40,15 +40,14 @@ export class LuggagefollowupComponent implements OnInit {
   }
 
   displayLuggage() {
-    this.colis$ = this.apiColis.findOneColis(this.numero_colis);
+    this.colis$ = this._colisService.findOneColis(this.numero_colis);
     this.colis$.subscribe((response) => {
-      let luggage: Colis[];
+      let luggage: Colis;
       luggage = response;
-      let tlug: number = luggage.length;
-      if (tlug == 0) {
+      if (luggage) {
         this.isErrornum = true;
       }
-      if (tlug > 0 && this.colis$ != null) {
+      if (luggage && this.colis$ != null) {
         this.luggage_founded = true;
         this.numero_colis = null;
       }

@@ -88,4 +88,9 @@ export class RegisterService {
       }),
     };
   }
+  getAuthHeaderDeleting() {
+    return new HttpHeaders({
+      Authorization: `Bearer ${this.getPersistedToken()}`,
+    });
+  }
 }

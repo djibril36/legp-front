@@ -37,10 +37,7 @@ export class GpprofilepageComponent implements OnInit {
     // si la saisie est valide
     if (this.controlValid) {
       let dateVoyage = this.voyageForm.value["date_voyage"];
-      const idVoyage = this.generateIdVoyage(
-        this.connectedUser.username,
-        dateVoyage
-      );
+      const idVoyage = this.generateIdVoyage(this.connectedUser.username);
       const newVoyage = {
         data: {
           id_voyage: idVoyage,
@@ -53,6 +50,7 @@ export class GpprofilepageComponent implements OnInit {
           semaine: 40,
           commentaire: this.voyageForm.value["commentaire"] || " ",
           nombre_de_colis: 0,
+          status: "voyage en cours",
         },
       };
       this._voyageService.createVoyage(newVoyage).subscribe({
@@ -71,8 +69,13 @@ export class GpprofilepageComponent implements OnInit {
     return this.voyageForm.controls;
   }
 
-  generateIdVoyage(gpName, dateVoyage) {
-    return gpName + dateVoyage.getTime();
+  generateIdVoyage(gpName) {
+    return (
+      "T" +
+      gpName.substring(0, 3).toUpperCase() +
+      "R" +
+      +Math.round(Math.random() * 50000)
+    );
   }
 
   inputControl() {

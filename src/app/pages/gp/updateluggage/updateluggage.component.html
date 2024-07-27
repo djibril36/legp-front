@@ -1,0 +1,140 @@
+<div class="colis-modal">
+  <div class="modal-header">
+    <button class="close" (click)="close()" type="button">
+      <i class="tim-icons icon-simple-remove text-white"></i>
+    </button>
+    <div class="text-center ml-auto mr-auto">
+      <p class="mb-0">Modifier colis</p>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="editColisForm">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label> Changer l'état du colis</label>
+            <p class="text-ps">PS : Par défault, l'état actuel du colis</p>
+            <select
+              class="form-control select-option"
+              (change)="ChangeEtatColis($event)"
+            >
+              <option>{{ colis.etatColis }}</option>
+              <option *ngFor="let etat of etatsColis">{{ etat }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-5" *ngIf="isautreEtat">
+          <div class="form-group">
+            <label>Renseigner ici</label>
+            <input
+              type="text"
+              id="autreEtat"
+              class="form-control"
+              formControlName="autreEtat"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input
+              type="text"
+              id="description"
+              class="form-control"
+              formControlName="description"
+            />
+          </div>
+        </div>
+        <div class="col-md-5" *ngIf="isPesable">
+          <div class="form-group">
+            <label for="poids">Poids</label>
+            <input
+              type="text"
+              id="poids"
+              class="form-control"
+              formControlName="poids"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <label for="expediteur">Expéditeur</label>
+          <input
+            type="text"
+            id="expediteur"
+            class="form-control"
+            formControlName="expediteur"
+          />
+        </div>
+        <div class="col-md-5">
+          <label for="telephoneExp">Téléphone</label>
+          <input
+            type="text"
+            id="telephoneExp"
+            class="form-control"
+            formControlName="telephoneExp"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <label for="destinataire">Destinataire</label>
+          <input
+            type="text"
+            id="destinataire"
+            class="form-control"
+            formControlName="destinataire"
+          />
+        </div>
+        <div class="col-md-5">
+          <label for="telephoneDest">Téléphone</label>
+          <input
+            type="text"
+            id="telephoneDest"
+            class="form-control"
+            formControlName="telephoneDest"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="montant">Montant</label>
+            <input
+              type="text"
+              id="montant"
+              class="form-control"
+              formControlName="montant"
+            />
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="paye">Payé</label>
+            <input
+              type="text"
+              id="paye"
+              class="form-control"
+              formControlName="paye"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="saveChanges()">
+      Enregistrer
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="close()">
+      Annuler
+    </button>
+  </div>
+</div>

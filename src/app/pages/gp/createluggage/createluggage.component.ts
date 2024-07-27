@@ -154,11 +154,11 @@ export class CreateluggageComponent implements OnInit {
       this.descriptionColisTab1Form.value["poids"]
     ) {
       this.descriptionColis =
-        "(" +
-        this.descriptionColisTab1Form.value["poids"] +
-        "kg" +
-        ")" +
-        " " +
+        // "(" +
+        // this.descriptionColisTab1Form.value["poids"] +
+        // "kg" +
+        // ")" +
+        // " " +
         this.descriptionColisTab1Form.value["descriptionp"];
       this.montant = this.descriptionColisTab1Form.value["montantp"];
     } else {

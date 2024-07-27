@@ -1,0 +1,107 @@
+<div class="colis-modal">
+  <div class="modal-header">
+    <button class="close" (click)="close()" type="button">
+      <i class="tim-icons icon-simple-remove text-white"></i>
+    </button>
+    <div class="text-center ml-auto mr-auto">
+      <p class="mb-0">Modifier le Voyage</p>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="updateVoyageForm">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label> Changer l'état du voyage</label>
+            <p class="text-ps">
+              PS : Par défault, l'état actuel du voyage.<br />
+              <strong>Voyage terminé</strong> mettra à jour l'état des colis à
+              <strong>disponible</strong>
+            </p>
+            <select
+              class="form-control select-option"
+              formControlName="statut"
+              (change)="changeEtatVoyage($event)"
+            >
+              <option>{{ voyage.statut }}</option>
+              <option *ngFor="let st of statuts">{{ st }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="date_voyage">Date de Voyage</label>
+            <input
+              type="date"
+              id="date_voyage"
+              class="form-control"
+              formControlName="date_voyage"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="ville_depart">Ville de Départ</label>
+            <input
+              type="text"
+              id="ville_depart"
+              class="form-control"
+              formControlName="ville_depart"
+            />
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="ville_arrivee">Ville d'Arrivée</label>
+            <input
+              type="text"
+              id="ville_arrivee"
+              class="form-control"
+              formControlName="ville_arrivee"
+            />
+          </div>
+        </div>
+      </div>
+      <!--    
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="montant">Montant</label>
+            <input
+              type="text"
+              id="montant"
+              class="form-control"
+              formControlName="montant"
+            />
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="paye">Payé</label>
+            <input
+              type="text"
+              id="paye"
+              class="form-control"
+              formControlName="paye"
+            />
+          </div>
+        </div>
+      </div> -->
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="saveChanges()">
+      Enregistrer
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="close()">
+      Annuler
+    </button>
+  </div>
+</div>

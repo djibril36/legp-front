@@ -22,6 +22,8 @@ export class VoyageService {
   // Define API
   apiURL = "http://localhost:1337/api";
   private apiProdURL = "https://strapi-179132-0.cloudclusters.net/api";
+  private apiProdURLVoyages =
+    "https://strapi-179132-0.cloudclusters.net/api/voyages";
   error: HttpErrorResponse;
   params: {};
   constructor(
@@ -48,8 +50,12 @@ export class VoyageService {
     };
 
     return this.http
-      .get<responseVoyage>(this.apiProdURL + "/voyages", this.params)
-      .pipe(map((response) => response.data.map((x) => x.attributes)));
+      .get<responseVoyage>(this.apiProdURLVoyages, this.params)
+      .pipe(
+        map((response) =>
+          response.data.map((x) => ({ id: x.id, ...x.attributes }))
+        )
+      );
   }
 
   // trouver les autres voyages de la semaine avec des parametres de recherches depart arrivee et date
@@ -64,8 +70,12 @@ export class VoyageService {
     };
 
     return this.http
-      .get<responseVoyage>(this.apiProdURL + "/voyages", this.params)
-      .pipe(map((response) => response.data.map((x) => x.attributes)));
+      .get<responseVoyage>(this.apiProdURLVoyages, this.params)
+      .pipe(
+        map((response) =>
+          response.data.map((x) => ({ id: x.id, ...x.attributes }))
+        )
+      );
   }
 
   // recupere les voyages du Gp connecté
@@ -77,8 +87,12 @@ export class VoyageService {
       },
     };
     return this.http
-      .get<responseVoyage>(this.apiProdURL + "/voyages", params)
-      .pipe(map((response) => response.data.map((x) => x.attributes)));
+      .get<responseVoyage>(this.apiProdURLVoyages, params)
+      .pipe(
+        map((response) =>
+          response.data.map((x) => ({ id: x.id, ...x.attributes }))
+        )
+      );
   }
 
   getPays(): Observable<Pays[]> {
@@ -96,7 +110,7 @@ export class VoyageService {
   // Fetch voyage
   getVoyage(id: any): Observable<Voyage> {
     return this.http
-      .get<Voyage>(this.apiProdURL + "/voyages/" + id)
+      .get<Voyage>(this.apiProdURLVoyages + id)
       .pipe(retry(1), catchError(this.handleError));
   }
 
@@ -104,31 +118,23 @@ export class VoyageService {
   createVoyage(Voyage: {}): Observable<Voyage> {
     return this.http
       .post<Voyage>(
-        this.apiProdURL + "/voyages",
+        this.apiProdURLVoyages,
         Voyage,
         this._registerService.getAuthHeader()
       )
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // HttpClient API put() method => Update Voyage
-  updateVoyage(id: any, Voyage: any): Observable<Voyage> {
-    return this.http
-      .put<Voyage>(
-        this.apiProdURL + "/voyages/" + id,
-        JSON.stringify(Voyage),
-        this._registerService.getAuthHeader()
-      )
-      .pipe(retry(1), catchError(this.handleError));
+  updateVoyage(voyage: Voyage): Observable<Voyage> {
+    return this.http.put(this.apiProdURLVoyages + "/" + voyage.id, {
+      data: voyage,
+    });
   }
 
-  // HttpClient API delete() method => Delete Voyage
-  deleteVoyage(id: any) {
+  deleteVoyage(id: number): Observable<void> {
+    const headers = this._registerService.getAuthHeaderDeleting();
     return this.http
-      .delete<Voyage>(
-        this.apiProdURL + "/Voyages/" + id,
-        this._registerService.getAuthHeader()
-      )
-      .pipe(retry(1), catchError(this.handleError));
+      .delete<void>(`${this.apiProdURLVoyages}/${id}`, { headers })
+      .pipe(catchError(this.handleError));
   }
 }

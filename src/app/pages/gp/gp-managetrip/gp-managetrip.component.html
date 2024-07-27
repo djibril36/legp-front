@@ -88,7 +88,7 @@
                   <th>Date voyage</th>
                   <th>Ville départ</th>
                   <th>Ville arrivée</th>
-
+                  <th>Nombre de colis</th>
                   <!-- <th class="text-right">Actions</th> -->
                 </tr>
               </thead>
@@ -103,8 +103,7 @@
                       type="button"
                       rel="tooltip"
                       class="btn btn-success btn-simple btn-icon btn-sm custom-margin"
-                      data-target="#myModal2"
-                      (click)="myModal2.show()"
+                      (click)="openEditVoyageModal(voyage)"
                     >
                       <i class="tim-icons icon-pencil"></i>
                     </button>
@@ -112,6 +111,7 @@
                       type="button"
                       rel="tooltip"
                       class="btn btn-danger btn-simple btn-icon btn-sm"
+                      (click)="deleteVoyage(voyage)"
                     >
                       <i class="tim-icons icon-simple-remove"></i>
                     </button>

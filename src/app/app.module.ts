@@ -1,6 +1,11 @@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
-import { FormBuilder, FormsModule, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule,
+} from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -25,12 +30,12 @@ import { RegisterpageComponent } from "./pages/content/registerpage/registerpage
 import { LandingpageComponent } from "./pages/content/landingpage/landingpage.component";
 import { RatingComponent } from "./utils/othersComponents/rating/rating.component";
 import { ErrorInterceptor } from "./utils/services/http-interceptors/error.interceptor.service";
+import { ConfirmationDialogComponent } from './utils/dialog/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RatingComponent,
-
+    ConfirmationDialogComponent,
     // IndexComponent,
     // ProfilepageComponent,
     // RegisterpageComponent,
@@ -38,21 +43,10 @@ import { ErrorInterceptor } from "./utils/services/http-interceptors/error.inter
   ],
   imports: [
     BrowserAnimationsModule,
-    FormsModule,
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    // BsDropdownModule.forRoot(),
-    // ProgressbarModule.forRoot(),
-    // TooltipModule.forRoot(),
-    // CollapseModule.forRoot(),
-    // TabsModule.forRoot(),
     PagesModule,
-    // PaginationModule.forRoot(),
-    // AlertModule.forRoot(),
-    // BsDatepickerModule.forRoot(),
-    // CarouselModule.forRoot(),
-    // ModalModule.forRoot()
   ],
   providers: [
     {

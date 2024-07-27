@@ -75,7 +75,6 @@ export class GpsearchpageComponent implements OnInit {
   /**_______RECHERCHER UN VOYAGE DATE-DEPART-ARRIVEE ______ */
   findVoyages() {
     if (this.selectedDepart == null || this.selectedArrivee == null) {
-      console.log("aucune date choisie");
     }
 
     if (this.SelectedDepart != null && this.selectedArrivee != null) {
@@ -85,7 +84,6 @@ export class GpsearchpageComponent implements OnInit {
         this.sendedDate
       );
       this.voyages$.subscribe((response) => {
-        console.log("response " + response);
         let voyages: Voyage[];
         voyages = response;
         let tvoy: number = voyages.length;
@@ -95,7 +93,6 @@ export class GpsearchpageComponent implements OnInit {
         }
         if (tvoy == 0) {
           this.isErrornum = true;
-          console.log("AUCUN VOYAGE TROUVE");
           this.findVoyagesOfWeek();
         }
       });
@@ -111,13 +108,11 @@ export class GpsearchpageComponent implements OnInit {
       this.weekNumber
     );
     this.voyages$.subscribe((response) => {
-      console.log("response " + response);
       let voyages: Voyage[];
       voyages = response;
       let tvoy: number = voyages.length;
       if (tvoy == 0) {
         this.isErrornum = true;
-        console.log("AUCUN VOYAGE TROUVE");
       }
       if (tvoy > 0 && this.voyages$ != null) {
         this.voyage_founded = true;
@@ -198,6 +193,5 @@ export class GpsearchpageComponent implements OnInit {
   getGpcontact(i) {
     console.log("index " + i);
     let nomGp = this.voyages$[i];
-    console.log("nomGP " + nomGp);
   }
 }

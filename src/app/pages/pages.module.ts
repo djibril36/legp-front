@@ -19,11 +19,9 @@ import { PaginationModule } from "ngx-bootstrap/pagination";
 import { AlertModule } from "ngx-bootstrap/alert";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { CarouselModule } from "ngx-bootstrap/carousel";
-import { ModalModule } from "ngx-bootstrap/modal";
+import { ModalModule, BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { JwBootstrapSwitchNg2Module } from "jw-bootstrap-switch-ng2";
 import { PopoverModule } from "ngx-bootstrap/popover";
-import { NgDragDropModule } from "ng-drag-drop";
-import { DndListModule } from "ngx-drag-and-drop-lists";
 
 import { IndexComponent } from "./index/index.component";
 import { ProfilepageComponent } from "./content/profilepage/profilepage.component";
@@ -44,6 +42,8 @@ import { GpManagetripComponent } from "./gp/gp-managetrip/gp-managetrip.componen
 import { GpNavbarComponent } from "./shared/gp-navbar/gp-navbar.component";
 import { OwnClientsComponent } from "./gp/own-clients/own-clients.component";
 import { GpFooterComponent } from "./shared/gp-footer/gp-footer.component";
+import { UpdateluggageComponent } from "./gp/updateluggage/updateluggage.component";
+import { UpdateVoyageComponent } from "./gp/updatevoyage/updatevoyage.component";
 
 @NgModule({
   imports: [
@@ -52,14 +52,21 @@ import { GpFooterComponent } from "./shared/gp-footer/gp-footer.component";
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgDragDropModule,
-    DndListModule,
     BsDropdownModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     PopoverModule.forRoot(),
     CollapseModule.forRoot(),
     JwBootstrapSwitchNg2Module,
+    TabsModule.forRoot(),
+    PaginationModule.forRoot(),
+    AlertModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    CarouselModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    ProgressbarModule.forRoot(),
+    TooltipModule.forRoot(),
+    CollapseModule.forRoot(),
     TabsModule.forRoot(),
     PaginationModule.forRoot(),
     AlertModule.forRoot(),
@@ -87,6 +94,8 @@ import { GpFooterComponent } from "./shared/gp-footer/gp-footer.component";
     GpNavbarComponent,
     OwnClientsComponent,
     GpFooterComponent,
+    UpdateluggageComponent,
+    UpdateVoyageComponent,
   ],
   exports: [
     IndexComponent,

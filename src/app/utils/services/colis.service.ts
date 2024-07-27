@@ -18,9 +18,10 @@ interface Response {
   providedIn: "root",
 })
 export class ColisService {
-  // Define API
+  // Définir l'API
   apiURL = "http://localhost:1337/api";
   apiProdURL = "https://strapi-179132-0.cloudclusters.net/api";
+  apiColisURL = "https://strapi-179132-0.cloudclusters.net/api/coliss";
   error: HttpErrorResponse;
 
   constructor(
@@ -29,23 +30,28 @@ export class ColisService {
   ) {}
 
   /*___SUIVRE UN COLIS VIA NUMBER___*/
-  findOneColis(colis_number: string) {
+  findOneColis(colis_number: string): Observable<Colis> {
     return this.http
-      .get<Response>(this.apiURL + "/coliss", {
+      .get<Response>(this.apiColisURL, {
         params: { "filters[numero_colis][$eq]": colis_number },
       })
-      .pipe(map((response) => response.data.map((x) => x.attributes)));
+      .pipe(
+        map(
+          (response) =>
+            response.data.map((x) => ({ id: x.id, ...x.attributes }))[0]
+        )
+      );
   }
 
-  /*___RECHERCHE COLIS __*/
+  /*___RECHERCHE COLIS ___*/
   rechercheColis(
     colis_number: string,
     expediteur: string,
     destinataire: string,
     nom_gp: string
-  ) {
+  ): Observable<Colis[]> {
     return this.http
-      .get<Response>(this.apiProdURL + "/coliss", {
+      .get<Response>(this.apiColisURL, {
         params: {
           "filters[numero_colis][$contains]": colis_number,
           "filters[expediteur][$contains]": expediteur,
@@ -53,35 +59,55 @@ export class ColisService {
           "filters[nom_gp][$eq]": nom_gp,
         },
       })
-      .pipe(map((response) => response.data.map((x) => x.attributes)));
+      .pipe(
+        map((response) =>
+          response.data.map((x) => ({ id: x.id, ...x.attributes }))
+        )
+      );
   }
 
-  createColis(Colis: {}): Observable<Colis> {
+  createColis(colis: {}): Observable<Colis> {
     return this.http
       .post<Colis>(
-        this.apiProdURL + "/coliss",
-        Colis,
+        this.apiColisURL,
+        colis,
         this._registerService.getAuthHeader()
       )
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // recupere les colis du Gp connecté
-  getColisDuGp(nomGp) {
+  // Modifier un colis
+  updateColis(colis: Colis): Observable<any> {
+    return this.http.put(this.apiColisURL + "/" + colis.id, { data: colis });
+  }
+
+  // Récupérer les colis du groupe connecté
+  getColisDuGp(nomGp: string): Observable<Colis[]> {
     const params = {
       params: {
         "filters[nom_gp][$eq]": nomGp,
-        "filters[etatColis][$ne]": "recupere",
+        "filters[etatColis][$ne]": "colis récupéré",
         populate: "*",
       },
     };
     return this.http
-      .get<Response>(this.apiProdURL + "/coliss", params)
-      .pipe(map((response) => response.data.map((x) => x.attributes)));
+      .get<Response>(this.apiColisURL, params)
+      .pipe(
+        map((response) =>
+          response.data.map((x) => ({ id: x.id, ...x.attributes }))
+        )
+      );
+  }
+
+  deleteColis(id: number): Observable<void> {
+    const headers = this._registerService.getAuthHeaderDeleting();
+    return this.http
+      .delete<void>(`${this.apiColisURL}/${id}`, { headers })
+      .pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse): Observable<never> {
     this.error = error;
-    return of();
+    return throwError(error);
   }
 }

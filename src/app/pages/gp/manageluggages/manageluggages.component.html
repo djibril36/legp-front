@@ -37,45 +37,6 @@
                       Fermer
                     </a>
                   </li>
-                  <!-- <li class="nav-item dropdown" dropdown>
-                    <a
-                      class="nav-link dropdown-toggle dropdown-toggle"
-                      data-toggle="dropdown"
-                      dropdownToggle
-                      href="javascript:void(0)"
-                      id="navbarDropdownMenuLink"
-                    >
-                      <i
-                        aria-hidden="true"
-                        class="tim-icons icon-settings-gear-63"
-                      >
-                      </i>
-                    </a>
-                    <div
-                      aria-labelledby="navbarDropdownMenuLink"
-                      class="dropdown-menu dropdown-menu-right"
-                      *dropdownMenu
-                    >
-                      <a class="dropdown-header"> Dropdown header </a>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        Action
-                      </a>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        Another action
-                      </a>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        Something else here
-                      </a>
-                      <div class="divider"></div>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        Separated link
-                      </a>
-                      <div class="divider"></div>
-                      <a class="dropdown-item" href="javascript:void(0)">
-                        One more separated link
-                      </a>
-                    </div>
-                  </li> -->
                 </ul>
               </div>
             </div>
@@ -104,6 +65,7 @@
                       />
                     </div>
                   </th>
+                  <th *ngIf="!isSearchOpened">Description</th>
                   <!-- <th *ngIf="!isSearchOpened">Statut</th> -->
                   <th>
                     Expéditeur
@@ -149,7 +111,7 @@
               <tbody *ngIf="!isSearchOpened && colis$ | async as colis">
                 <tr *ngFor="let c of colis.reverse()">
                   <td>{{ c.numero_colis }}</td>
-                  <!-- <td>{{ c.etatColiscolis }}</td> -->
+                  <td>{{ c.description }}</td>
                   <td>{{ c.expediteur }}</td>
                   <td>{{ c.destinataire }}</td>
                   <td>{{ c.montant }}</td>
@@ -158,8 +120,7 @@
                       type="button"
                       rel="tooltip"
                       class="btn btn-success btn-simple btn-icon btn-sm custom-margin"
-                      data-target="#myModal2"
-                      (click)="myModal2.show()"
+                      (click)="openEditModal(c)"
                     >
                       <i class="tim-icons icon-pencil"></i>
                     </button>
@@ -167,6 +128,7 @@
                       type="button"
                       rel="tooltip"
                       class="btn btn-danger btn-simple btn-icon btn-sm"
+                      (click)="deleteColis(c)"
                     >
                       <i class="tim-icons icon-simple-remove"></i>
                     </button>
@@ -176,7 +138,7 @@
               <tbody *ngIf="colisFounded$ | async as colisRecherches">
                 <tr *ngFor="let cr of colisRecherches">
                   <td>{{ cr.numero_colis }}</td>
-                  <!-- <td>{{ c.etatColiscolis }}</td> -->
+                  <td>{{ cr.description }}</td>
                   <td>{{ cr.expediteur }}</td>
                   <td>{{ cr.destinataire }}</td>
                   <td>{{ cr.montant }}</td>
@@ -185,13 +147,16 @@
                       type="button"
                       rel="tooltip"
                       class="btn btn-success btn-simple btn-icon btn-sm custom-margin"
+                      (click)="openEditModal(cr)"
                     >
                       <i class="tim-icons icon-pencil"></i>
                     </button>
+
                     <button
                       type="button"
                       rel="tooltip"
                       class="btn btn-danger btn-simple btn-icon btn-sm"
+                      (click)="deleteColis(cr)"
                     >
                       <i class="tim-icons icon-simple-remove"></i>
                     </button>
@@ -215,121 +180,5 @@
     <footer class="footer">
       <app-gp-footer></app-gp-footer>
     </footer>
-  </div>
-</div>
-
-<!--_____________________ MODIFICATION COLIS_________________  -->
-
-<div
-  aria-hidden="true"
-  aria-labelledby="myModalLabel"
-  bsModal
-  class="modal fade modal-black"
-  #myModal2="bs-modal"
-  id="myModal2"
-  role="dialog"
-  tabindex="-1"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header justify-content-center">
-        <button
-          aria-hidden="true"
-          class="close"
-          data-dismiss="modal"
-          (click)="myModal2.hide()"
-          type="button"
-        >
-          <i class="tim-icons icon-simple-remove text-white"> </i>
-        </button>
-        <div class="text-muted text-center ml-auto mr-auto">
-          <p class="mb-0">Modifier le colis</p>
-        </div>
-      </div>
-      <!-- <div class="modal-body">
-        <form class="form" [formGroup]="registerForm">
-          <div class="form-group mb-3">
-            <div
-              class="input-group input-group-alternative"
-              [ngClass]="{ 'input-group-focus': focus1 === true }"
-            >
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="tim-icons icon-single-02"> </i>
-                </span>
-              </div>
-              <input
-                [ngClass]="{
-                  'is-invalid': submitted && f.identifier.errors
-                }"
-                class="form-control"
-                formControlName="identifier"
-                placeholder="Description"
-                type="text"
-                (focus)="focus1 = true"
-                (blur)="focus1 = false"
-              />
-              <div
-                *ngIf="submitted && f.identifier.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="f.identifier.errors.required">
-                  Nom d'utilisateur obligatoire
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div
-              class="input-group input-group-alternative"
-              [ngClass]="{ 'input-group-focus': focus2 === true }"
-            >
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="tim-icons icon-key-25"> </i>
-                </span>
-              </div>
-              <input
-                [ngClass]="{
-                  'is-invalid': submitted && f.password.errors
-                }"
-                class="form-control"
-                formControlName="password"
-                placeholder="Mot de passe"
-                type="password"
-                (focus)="focus2 = true"
-                (blur)="focus2 = false"
-              />
-              <div
-                *ngIf="submitted && f.password.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="f.password.errors.required">Expéditeur</div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <button
-                class="btn btn-primary my-4"
-                type="button"
-                (click)="logOn()"
-              >
-                Se connecter
-              </button>
-            </div>
-            <div>
-              <button
-                class="btn btn-primary my-4"
-                type="button"
-                (click)="logOn()"
-              >
-                Annuler
-              </button>
-            </div>
-          </div>
-        </form>
-      </div> -->
-    </div>
   </div>
 </div>

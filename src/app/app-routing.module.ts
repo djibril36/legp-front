@@ -24,10 +24,12 @@ const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: IndexComponent },
   { path: "register", component: RegisterpageComponent },
-  { path: "landing", component: LandingpageComponent },
+  // { path: "landing", component: LandingpageComponent },
   { path: "gpsearch", component: GpsearchpageComponent },
   { path: "followup", component: LuggagefollowupComponent },
   { path: "login", component: LoginComponent },
+  { path: "test", component: TestComponent },
+
   {
     path: "gp-profile",
     canActivate: [LoggedInGuard],
@@ -36,9 +38,10 @@ const routes: Routes = [
   { path: "gp-createlug", component: CreateluggageComponent },
   { path: "gp-managelug", component: ManageluggagesComponent },
   { path: "gp-managetrip", component: GpManagetripComponent },
+  { path: "client-trip", component: ClientTripComponent },
+  { path: "c", component: TestComponent },
 
-  // { path: "client-trip", component: ClientTripComponent },
-  { path: "own-clients", component: OwnClientsComponent },
+  // { path: "own-clients", component: OwnClientsComponent },
 ];
 
 @NgModule({

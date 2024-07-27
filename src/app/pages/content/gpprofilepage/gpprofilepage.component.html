@@ -8,6 +8,123 @@
   <div class="section">
     <div class="container align-items-center">
       <div class="row">
+        <!--___________________ PROFILE GP______________  -->
+
+        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+          <div class="prof">
+            <div class="card card-coin card-plain">
+              <div class="card-header">
+                <img
+                  class="img-center img-fluid rounded-circle"
+                  src="/assets/img/djiby.jpg"
+                />
+                <h4 class="title">{{ connectedUser.username | uppercase }}</h4>
+              </div>
+              <div class="card-body">
+                <tabset
+                  class="nav-tabs-danger justify-content-center tab-subcategories"
+                >
+                  <tab heading="Gains">
+                    <div class="table-responsive">
+                      <table class="table tablesorter" id="plain-table">
+                        <thead class="text-danger">
+                          <tr>
+                            <th class="header">Voy</th>
+                            <th class="header">Colis</th>
+                            <th class="header">Kg</th>
+                            <th class="header">Mont.</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>TR45RINM</td>
+                            <td>89</td>
+                            <td>50</td>
+                            <td>7000</td>
+                          </tr>
+                          <tr>
+                            <td>TR45RINM</td>
+                            <td>89</td>
+                            <td>50</td>
+                            <td>7000</td>
+                          </tr>
+                          <tr>
+                            <td>TR45RINM</td>
+                            <td>89</td>
+                            <td>50</td>
+                            <td>7000</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </tab>
+                  <tab heading="Rec.">
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label"> Pay to </label>
+                      <div class="col-sm-9">
+                        <div class="form-group">
+                          <input
+                            class="form-control"
+                            placeholder="e.g. 1Nasd92348hU984353hfid"
+                            type="text"
+                          />
+
+                          <span class="form-text">
+                            Please enter a valid address.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label"> Amount </label>
+                      <div class="col-sm-9">
+                        <div class="form-group">
+                          <input
+                            class="form-control"
+                            placeholder="1.587"
+                            type="text"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      class="btn btn-simple btn-danger btn-icon btn-round float-right"
+                      type="submit"
+                    >
+                      <i class="tim-icons icon-send"> </i>
+                    </button>
+                  </tab>
+                  <tab heading="Actu">
+                    <div class="table-responsive">
+                      <table class="table tablesorter" id="plain-table">
+                        <thead class="text-danger">
+                          <tr>
+                            <th class="header">Avis clients/Notifications</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>avis client : gp professionelle</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Le GP : 23 kg dispo chez un particulier pour votre
+                              prochin depart
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>notation client : 3 etoiles</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </tab>
+                </tabset>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!--___________________ PUBLIEZ UN VOYAGE______________  -->
 
         <div class="col-lg-6 col-md-6">
@@ -169,123 +286,6 @@
                   Publiez
                 </button>
               </form>
-            </div>
-          </div>
-        </div>
-
-        <!--___________________ PROFILE GP______________  -->
-
-        <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-          <div class="prof">
-            <div class="card card-coin card-plain">
-              <div class="card-header">
-                <img
-                  class="img-center img-fluid rounded-circle"
-                  src="/assets/img/djiby.jpg"
-                />
-                <h4 class="title">{{ connectedUser.username | uppercase }}</h4>
-              </div>
-              <div class="card-body">
-                <tabset
-                  class="nav-tabs-danger justify-content-center tab-subcategories"
-                >
-                  <tab heading="Gains">
-                    <div class="table-responsive">
-                      <table class="table tablesorter" id="plain-table">
-                        <thead class="text-danger">
-                          <tr>
-                            <th class="header">Voy</th>
-                            <th class="header">Colis</th>
-                            <th class="header">Kg</th>
-                            <th class="header">Mont.</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>TR45RINM</td>
-                            <td>89</td>
-                            <td>50</td>
-                            <td>7000</td>
-                          </tr>
-                          <tr>
-                            <td>TR45RINM</td>
-                            <td>89</td>
-                            <td>50</td>
-                            <td>7000</td>
-                          </tr>
-                          <tr>
-                            <td>TR45RINM</td>
-                            <td>89</td>
-                            <td>50</td>
-                            <td>7000</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </tab>
-                  <tab heading="Rec.">
-                    <div class="row">
-                      <label class="col-sm-3 col-form-label"> Pay to </label>
-                      <div class="col-sm-9">
-                        <div class="form-group">
-                          <input
-                            class="form-control"
-                            placeholder="e.g. 1Nasd92348hU984353hfid"
-                            type="text"
-                          />
-
-                          <span class="form-text">
-                            Please enter a valid address.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <label class="col-sm-3 col-form-label"> Amount </label>
-                      <div class="col-sm-9">
-                        <div class="form-group">
-                          <input
-                            class="form-control"
-                            placeholder="1.587"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      class="btn btn-simple btn-danger btn-icon btn-round float-right"
-                      type="submit"
-                    >
-                      <i class="tim-icons icon-send"> </i>
-                    </button>
-                  </tab>
-                  <tab heading="Actu">
-                    <div class="table-responsive">
-                      <table class="table tablesorter" id="plain-table">
-                        <thead class="text-danger">
-                          <tr>
-                            <th class="header">Avis clients/Notifications</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>avis client : gp professionelle</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              Le GP : 23 kg dispo chez un particulier pour votre
-                              prochin depart
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>notation client : 3 etoiles</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </tab>
-                </tabset>
-              </div>
             </div>
           </div>
         </div>
