@@ -68,6 +68,9 @@ export class RegisterService {
       email: this._storageService.getItem("userEmail") || "",
     };
   }
+  updateUser(id: string, user: Partial<Utilisateur>): Observable<Utilisateur> {
+    return this.http.put<Utilisateur>(`${this.apiProdURL}/users/${id}`, user);
+  }
 
   getPersistedToken(): string {
     return this._storageService.getItem("token") || "";

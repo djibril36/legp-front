@@ -83,6 +83,7 @@ export class VoyageService {
     const params = {
       params: {
         "filters[nom_gp][$eq]": nomGp,
+        "sort[0]": "createdAt:desc",
         populate: "*",
       },
     };

@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="title">Modifier le profil</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="username">Nom d'utilisateur</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                formControlName="username"
+                [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+              />
+              <div
+                *ngIf="submitted && f.username.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.username.errors.required">
+                  Nom d'utilisateur est requis
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+              />
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email est requis</div>
+                <div *ngIf="f.email.errors.email">Email invalide</div>
+              </div>
+            </div>
+            <!-- <div class="form-group">
+              <label for="phone">Téléphone</label>
+              <input
+                type="text"
+                class="form-control"
+                id="phone"
+                formControlName="phone"
+                [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+              />
+              <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                <div *ngIf="f.phone.errors.required">Téléphone est requis</div>
+              </div>
+            </div> -->
+            <!-- <div class="form-group">
+              <label for="address">Adresse</label>
+              <input
+                type="text"
+                class="form-control"
+                id="address"
+                formControlName="address"
+                [ngClass]="{ 'is-invalid': submitted && f.address.errors }"
+              />
+              <div
+                *ngIf="submitted && f.address.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.address.errors.required">Adresse est requise</div>
+              </div>
+            </div> -->
+            <button type="submit" class="btn btn-primary btn-round">
+              Enregistrer
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-gp-navbar></app-gp-navbar>
+<div class="wrapper">
+  <div class="row">
+    <img class="dots" src="/assets/img/dots.png" />
+    <img class="path" src="/assets/img/path4.png" />
+  </div>
+
+  <div class="section">
+    <div class="container align-items-center">
+      <div class="row">
+        <!--___________________ PROFILE GP______________  -->
+
+        <div class="col-lg-6 col-md-8 ml-auto mr-auto">
+          <div class="prof">
+            <div class="card card-coin card-plain">
+              <div class="card-header">
+                <img
+                  class="img-center img-fluid rounded-circle"
+                  src="/assets/img/djiby.jpg"
+                />
+                <h4 class="title">{{ connectedUser.username | uppercase }}</h4>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <label class="col-sm-3 col-form-label"> Pay to </label>
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        placeholder="e.g. 1Nasd92348hU984353hfid"
+                        type="text"
+                      />
+
+                      <span class="form-text">
+                        Please enter a valid address.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-3 col-form-label"> Amount </label>
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        placeholder="1.587"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-simple btn-danger btn-icon btn-round float-right"
+                  type="submit"
+                >
+                  <i class="tim-icons icon-send"> </i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <app-gp-footer></app-gp-footer>
+</footer>

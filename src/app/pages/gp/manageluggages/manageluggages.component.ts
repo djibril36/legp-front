@@ -108,11 +108,11 @@ export class ManageluggagesComponent implements OnInit {
         if (result) {
           this._colisService.deleteColis(colis.id).subscribe(
             () => {
-              // Handle successful deletion
+              this.getColisduGp();
             },
 
             (error) => {
-              console.error("Error deleting Colis", error);
+              // console.error("Error deleting Colis", error);
             }
           );
         }

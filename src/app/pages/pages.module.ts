@@ -44,6 +44,7 @@ import { OwnClientsComponent } from "./gp/own-clients/own-clients.component";
 import { GpFooterComponent } from "./shared/gp-footer/gp-footer.component";
 import { UpdateluggageComponent } from "./gp/updateluggage/updateluggage.component";
 import { UpdateVoyageComponent } from "./gp/updatevoyage/updatevoyage.component";
+import { GpProfileEditPageComponent } from './content/gp-profile-edit-page/gp-profile-edit-page.component';
 
 @NgModule({
   imports: [
@@ -96,6 +97,7 @@ import { UpdateVoyageComponent } from "./gp/updatevoyage/updatevoyage.component"
     GpFooterComponent,
     UpdateluggageComponent,
     UpdateVoyageComponent,
+    GpProfileEditPageComponent,
   ],
   exports: [
     IndexComponent,

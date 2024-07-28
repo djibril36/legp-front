@@ -19,6 +19,7 @@ import { GpManagetripComponent } from "./pages/gp/gp-managetrip/gp-managetrip.co
 import { RatingComponent } from "./utils/othersComponents/rating/rating.component";
 import { OwnClientsComponent } from "./pages/gp/own-clients/own-clients.component";
 import { LoggedInGuard } from "./core/guards/logged-in.guard";
+import { GpProfileEditPageComponent } from "./pages/content/gp-profile-edit-page/gp-profile-edit-page.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -35,11 +36,27 @@ const routes: Routes = [
     canActivate: [LoggedInGuard],
     component: GpprofilepageComponent,
   },
-  { path: "gp-createlug", component: CreateluggageComponent },
-  { path: "gp-managelug", component: ManageluggagesComponent },
-  { path: "gp-managetrip", component: GpManagetripComponent },
+  {
+    path: "gp-createlug",
+    canActivate: [LoggedInGuard],
+    component: CreateluggageComponent,
+  },
+  {
+    path: "gp-managelug",
+    canActivate: [LoggedInGuard],
+    component: ManageluggagesComponent,
+  },
+  {
+    path: "gp-managetrip",
+    canActivate: [LoggedInGuard],
+    component: GpManagetripComponent,
+  },
   { path: "client-trip", component: ClientTripComponent },
-  { path: "c", component: TestComponent },
+  // {
+  //   path: "gp-profile-edit",
+  //   canActivate: [LoggedInGuard],
+  //   component: GpProfileEditPageComponent,
+  // },
 
   // { path: "own-clients", component: OwnClientsComponent },
 ];

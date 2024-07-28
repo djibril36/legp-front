@@ -87,6 +87,7 @@ export class ColisService {
       params: {
         "filters[nom_gp][$eq]": nomGp,
         "filters[etatColis][$ne]": "colis récupéré",
+        "sort[0]": "createdAt:desc",
         populate: "*",
       },
     };
