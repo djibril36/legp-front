@@ -97,7 +97,9 @@
                   <td>{{ voyage.date_voyage }}</td>
                   <td>{{ voyage.ville_depart }}</td>
                   <td>{{ voyage.ville_arrivee }}</td>
-                  <td>{{ voyage.nombre_de_colis }}</td>
+                  <td>
+                    {{ voyage.nombre_de_colis }} - ({{ voyage.poids_colis }} Kg)
+                  </td>
                   <td class="align-items-center">
                     <button
                       type="button"

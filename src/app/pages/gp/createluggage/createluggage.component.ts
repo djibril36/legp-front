@@ -9,6 +9,11 @@ import { Voyage } from "src/app/utils/models/voyage";
 import { ColisService } from "src/app/utils/services/colis.service";
 import { RegisterService } from "src/app/utils/services/register.service";
 import { VoyageService } from "src/app/utils/services/voyage.service";
+import {
+  CONVERSION_RATES,
+  DEFAULT_CURRENCY,
+  DEFAULT_STATUT,
+} from "src/app/utils/constantes/constantes";
 
 @Component({
   selector: "app-createluggage",
@@ -22,19 +27,20 @@ export class CreateluggageComponent implements OnInit {
   isStep3: boolean = false;
   progressValue: number;
   montant: number;
+  selectedDevise: string;
+  amountInXOF: number;
   descriptionColis: string;
   currentToken: string;
-  voyageSelected: string;
+  voyageSelected: Voyage;
   indicatifExp: string;
   indicatifDest: string;
-  deviseSelected: string;
   descriptionColisTab1Form: FormGroup;
   descriptionColisTab2Form: FormGroup;
   colisForm: FormGroup;
   connectedUser: Utilisateur;
   voyages$: Observable<Voyage[]> | undefined;
   pays$: Observable<Pays[]> | undefined;
-  voyage: Voyage;
+  voyagePrev: Voyage; // conteint les details du voyage preselectionné
   httpOptions: { headers: any };
 
   constructor(
@@ -55,31 +61,23 @@ export class CreateluggageComponent implements OnInit {
   createColis() {
     if (
       this.colisForm.value["destinataire"] &&
-      this.colisForm.value["cinDest"] &&
+      // this.colisForm.value["cinDest"] &&
       this.colisForm.value["telephoneDest"]
     ) {
-      const newColis = {
-        data: {
-          numero_colis: this.generateNumberColis(),
-          description: this.descriptionColis,
-          montant: this.montant + " " + this.deviseSelected,
-          expediteur: this.colisForm.value["expediteur"],
-          telephoneExp:
-            this.indicatifExp + this.colisForm.value["telephoneExp"],
-          telephoneDest:
-            this.indicatifDest + this.colisForm.value["telephoneDest"],
-          cinExp: this.colisForm.value["cinExp"],
-          cinDest: this.colisForm.value["cinDest"],
-          paye: this.colisForm.value["paye"],
-          etatColis: "voyage en cours",
-          destinataire: this.colisForm.value["destinataire"],
-          voyage_details: this.voyageSelected,
-          // gp: this.connectedUser,
-          nom_gp: this.connectedUser.username,
-        },
-      };
+      const newColis = this.addColisData();
       this._colisService.createColis(newColis).subscribe({
         next: () => {
+          const updatedVoyage = { ...this.voyagePrev, ...this.voyageSelected };
+          this._voyageService.updateVoyage(updatedVoyage).subscribe(
+            () => {
+              this.colisForm.reset();
+              this.descriptionColisTab1Form.reset(),
+                this.descriptionColisTab2Form.reset();
+            },
+            (error) => {
+              error;
+            }
+          );
           this._router.navigateByUrl("/gp-managelug");
         },
         error: (error) => {
@@ -89,8 +87,51 @@ export class CreateluggageComponent implements OnInit {
     }
   }
 
-  selectVoyage(event: any) {
-    this.voyageSelected = event.target.value;
+  addColisData() {
+    const newColis = {
+      data: {
+        numero_colis: this.generateNumberColis(),
+        description: this.descriptionColis,
+        poids: this.descriptionColisTab1Form.value["poids"]
+          ? this.descriptionColisTab1Form.value["poids"]
+          : 0,
+        montant: this.montant + " " + this.selectedDevise,
+        expediteur: this.colisForm.value["expediteur"],
+        telephoneExp: this.indicatifExp + this.colisForm.value["telephoneExp"],
+        telephoneDest:
+          this.indicatifDest + this.colisForm.value["telephoneDest"],
+        cinExp: this.colisForm.value["cinExp"],
+        cinDest: this.colisForm.value["cinDest"],
+        paye: this.colisForm.value["paye"],
+        etatColis: DEFAULT_STATUT,
+        destinataire: this.colisForm.value["destinataire"],
+        voyage_details:
+          this.voyageSelected.date_voyage +
+          " " +
+          this.voyageSelected.ville_depart +
+          " " +
+          this.voyageSelected.ville_arrivee,
+        // gp: this.connectedUser,
+        nom_gp: this.connectedUser.username,
+      },
+    };
+    return newColis;
+  }
+
+  selectVoyage(voyage: Voyage) {
+    if (voyage) {
+      this.voyagePrev = voyage;
+      this.voyageSelected = {
+        id: voyage.id,
+        date_voyage: voyage.date_voyage,
+        ville_depart: voyage.ville_depart,
+        ville_arrivee: voyage.ville_arrivee,
+        nombre_de_colis: voyage.nombre_de_colis + 1,
+        poids_colis: voyage.poids_colis,
+        kilo_dispo: voyage.kilo_dispo,
+        encaisse: voyage.encaisse,
+      };
+    }
   }
 
   selectIndicatifExp(event: any) {
@@ -105,13 +146,29 @@ export class CreateluggageComponent implements OnInit {
     this.indicatifDest = indicatif[0];
   }
 
-  selectDevise(event: any) {
-    this.deviseSelected = event.target.value;
+  selectDevise(event: Event) {
+    const selectedDevise = (event.target as HTMLSelectElement).value;
+
+    if (
+      this.voyageSelected &&
+      selectedDevise &&
+      selectedDevise !== DEFAULT_CURRENCY
+    ) {
+      const amount = this.descriptionColisTab1Form.value["montantp"]
+        ? this.descriptionColisTab1Form.value["montantp"]
+        : this.descriptionColisTab2Form.value["montantnp"];
+      this.amountInXOF = this.convertCurrency(amount, selectedDevise);
+      this.voyageSelected.encaisse =
+        this.voyageSelected.encaisse + this.amountInXOF;
+      console.log(this.voyageSelected.encaisse);
+    }
+    this.selectedDevise = selectedDevise;
   }
 
   toStep2() {
     this.getColisDescription();
     if (this.descriptionColis && this.montant && this.voyageSelected) {
+      this.addPoidsColisToVoyage();
       this.isStep1 = false;
       this.isStep2 = true;
       this.isStep3 = false;
@@ -168,6 +225,25 @@ export class CreateluggageComponent implements OnInit {
     }
   }
 
+  // ajouter le poids du colis sur les kilos du voyage et le nbre de kilos dispo
+  addPoidsColisToVoyage() {
+    this.voyageSelected.poids_colis = this.descriptionColisTab1Form.value[
+      "poids"
+    ]
+      ? this.voyageSelected.poids_colis +
+        this.descriptionColisTab1Form.value["poids"]
+      : this.voyageSelected.poids_colis;
+
+    this.voyageSelected.kilo_dispo =
+      this.descriptionColisTab1Form.value["poids"] &&
+      this.voyageSelected.kilo_dispo &&
+      this.voyageSelected.kilo_dispo >
+        this.descriptionColisTab1Form.value["poids"]
+        ? this.voyageSelected.kilo_dispo -
+          this.descriptionColisTab1Form.value["poids"]
+        : this.voyageSelected.kilo_dispo;
+  }
+
   changeTab1() {
     this.descriptionColisTab2Form.reset();
   }
@@ -215,6 +291,10 @@ export class CreateluggageComponent implements OnInit {
       "C" +
       Math.round(Math.random() * 50000)
     );
+  }
+  convertCurrency(amount: number, targetCurrency: string): number {
+    const rate = CONVERSION_RATES[targetCurrency];
+    return amount * rate;
   }
 }
 

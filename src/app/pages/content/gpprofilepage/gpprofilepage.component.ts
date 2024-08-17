@@ -7,6 +7,9 @@ import { DateFormatter } from "ngx-bootstrap/datepicker";
 import { Utilisateur } from "src/app/utils/models/utilisateur";
 import { RegisterService } from "src/app/utils/services/register.service";
 import { VoyageService } from "src/app/utils/services/voyage.service";
+import { DEFAULT_STATUT } from "src/app/utils/constantes/constantes";
+import { Observable } from "rxjs";
+import { Voyage } from "src/app/utils/models/voyage";
 
 @Component({
   selector: "app-gpprofilepage",
@@ -24,6 +27,8 @@ export class GpprofilepageComponent implements OnInit {
   controlValid = false;
   httpOptions: {};
   erroMessage: any;
+  voyages$: Observable<Voyage[]> | undefined;
+
   constructor(
     private _registerService: RegisterService,
     private formBuilder: FormBuilder,
@@ -31,28 +36,35 @@ export class GpprofilepageComponent implements OnInit {
     private _router: Router
   ) {}
 
+  ngOnInit() {
+    // information du gp connecté
+    this.currentToken = this._registerService.getPersistedToken();
+    this.getUserVoyages();
+    this.initVoyageForm();
+    this.initGraphes();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.currentToken}`,
+      }),
+    };
+  }
+
+  getUserVoyages() {
+    this.connectedUser = this._registerService.getConnectedUser();
+    if (this.connectedUser.username) {
+      this.voyages$ = this._voyageService.getVoyagesDuGp(
+        this.connectedUser.username
+      );
+    }
+  }
+
   publierVoyage() {
     this.submitted = true;
     this.controlValid = this.inputControl();
     // si la saisie est valide
     if (this.controlValid) {
-      let dateVoyage = this.voyageForm.value["date_voyage"];
-      const idVoyage = this.generateIdVoyage(this.connectedUser.username);
-      const newVoyage = {
-        data: {
-          id_voyage: idVoyage,
-          date_voyage: this.voyageForm.value["date_voyage"],
-          ville_depart: this.voyageForm.value["depart"],
-          ville_arrivee: this.voyageForm.value["arrivee"],
-          kilo_dispo: this.voyageForm.value["kg_disponible"] || 100,
-          tarif: this.voyageForm.value["tarif"],
-          nom_gp: this.connectedUser.username,
-          semaine: 40,
-          commentaire: this.voyageForm.value["commentaire"] || " ",
-          nombre_de_colis: 0,
-          status: "voyage en cours",
-        },
-      };
+      const newVoyage = this.addVoyageData();
       this._voyageService.createVoyage(newVoyage).subscribe({
         next: () => {
           this.voyageForm.reset();
@@ -63,6 +75,28 @@ export class GpprofilepageComponent implements OnInit {
         },
       });
     }
+  }
+
+  addVoyageData() {
+    const idVoyage = this.generateIdVoyage(this.connectedUser.username);
+    const newVoyage = {
+      data: {
+        id_voyage: idVoyage,
+        date_voyage: this.voyageForm.value["date_voyage"],
+        ville_depart: this.voyageForm.value["depart"].toUpperCase(),
+        ville_arrivee: this.voyageForm.value["arrivee"].toUpperCase(),
+        kilo_dispo: this.voyageForm.value["kg_disponible"] || 100,
+        tarif: this.voyageForm.value["tarif"],
+        nom_gp: this.connectedUser.username,
+        semaine: 40,
+        commentaire: this.voyageForm.value["commentaire"] || " ",
+        nombre_de_colis: 0,
+        voyage_statut: DEFAULT_STATUT,
+        encaisse: 0,
+        poids_colis: 0,
+      },
+    };
+    return newVoyage;
   }
 
   get f() {
@@ -89,17 +123,7 @@ export class GpprofilepageComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    // information du gp connecté
-    this.connectedUser = this._registerService.getConnectedUser();
-    this.currentToken = this._registerService.getPersistedToken();
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.currentToken}`,
-      }),
-    };
-
+  initVoyageForm() {
     // voyage form
     this.voyageForm = this.formBuilder.group({
       depart: ["", Validators.required],
@@ -109,7 +133,9 @@ export class GpprofilepageComponent implements OnInit {
       kg_disponible: [""],
       commentaire: [""],
     });
+  }
 
+  initGraphes() {
     var body = document.getElementsByTagName("body")[0];
     body.classList.add("profile-page");
 

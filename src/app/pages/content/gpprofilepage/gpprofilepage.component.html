@@ -26,33 +26,32 @@
                 >
                   <tab heading="Gains">
                     <div class="table-responsive">
-                      <table class="table tablesorter" id="plain-table">
+                      <table
+                        class="table tablesorter"
+                        id="plain-table"
+                        *ngIf="voyages$ | async as voyages"
+                      >
                         <thead class="text-danger">
                           <tr>
+                            <th class="header">Date</th>
                             <th class="header">Voy</th>
-                            <th class="header">Colis</th>
-                            <th class="header">Kg</th>
-                            <th class="header">Mont.</th>
+                            <!-- <th class="header">Colis</th>
+                            <th class="header">Kg</th> -->
+                            <th class="header">Gains</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>TR45RINM</td>
-                            <td>89</td>
-                            <td>50</td>
-                            <td>7000</td>
-                          </tr>
-                          <tr>
-                            <td>TR45RINM</td>
-                            <td>89</td>
-                            <td>50</td>
-                            <td>7000</td>
-                          </tr>
-                          <tr>
-                            <td>TR45RINM</td>
-                            <td>89</td>
-                            <td>50</td>
-                            <td>7000</td>
+                          <tr *ngFor="let voyage of voyages">
+                            <td>{{ voyage.date_voyage }}</td>
+                            <td>
+                              {{ voyage.ville_depart }} -
+                              {{ voyage.ville_arrivee }}
+                            </td>
+                            <!-- <td>{{ voyage.nombre_de_colis }}</td>
+                            <td>{{ voyage.poids_colis }}</td> -->
+                            <td>
+                              {{ voyage.encaisse | numberFormatter }} FR CFA
+                            </td>
                           </tr>
                         </tbody>
                       </table>

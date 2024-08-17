@@ -108,13 +108,6 @@ export class VoyageService {
     return of();
   }
 
-  // Fetch voyage
-  getVoyage(id: any): Observable<Voyage> {
-    return this.http
-      .get<Voyage>(this.apiProdURLVoyages + id)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
   // HttpClient API post() method => Create Voyage
   createVoyage(Voyage: {}): Observable<Voyage> {
     return this.http

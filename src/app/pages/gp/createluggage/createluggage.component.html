@@ -47,10 +47,11 @@
               <label> Sélectionnez le voyage correspondant </label>
               <select
                 class="form-control select-option"
-                (change)="selectVoyage($event)"
+                [(ngModel)]="selectedVoyage"
+                (change)="selectVoyage(selectedVoyage)"
+                [ngModelOptions]="{ standalone: true }"
               >
-                <option>Sélectionner un voyage</option>
-                <option *ngFor="let voyage of voyages.reverse()">
+                <option *ngFor="let voyage of voyages" [ngValue]="voyage">
                   {{ voyage.date_voyage }} {{ voyage.ville_depart }}
                   {{ voyage.ville_arrivee }}
                 </option>
@@ -105,7 +106,7 @@
                         (change)="selectDevise($event)"
                       >
                         <option>Monnaie</option>
-                        <option *ngFor="let p of pays">
+                        <option *ngFor="let p of pays" [value]="p.devise">
                           {{ p.devise }}
                         </option>
                       </select>

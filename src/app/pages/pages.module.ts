@@ -44,7 +44,9 @@ import { OwnClientsComponent } from "./gp/own-clients/own-clients.component";
 import { GpFooterComponent } from "./shared/gp-footer/gp-footer.component";
 import { UpdateluggageComponent } from "./gp/updateluggage/updateluggage.component";
 import { UpdateVoyageComponent } from "./gp/updatevoyage/updatevoyage.component";
-import { GpProfileEditPageComponent } from './content/gp-profile-edit-page/gp-profile-edit-page.component';
+import { GpProfileEditPageComponent } from "./content/gp-profile-edit-page/gp-profile-edit-page.component";
+import { ConfirmationDialogComponent } from "../utils/dialog/confirmation-dialog/confirmation-dialog.component";
+import { NumberFormatterPipe } from "../utils/pipes/number-formatter.pipe";
 
 @NgModule({
   imports: [
@@ -82,6 +84,7 @@ import { GpProfileEditPageComponent } from './content/gp-profile-edit-page/gp-pr
     LandingpageComponent,
     GpsearchpageComponent,
     LuggagefollowupComponent,
+    ConfirmationDialogComponent,
     TestComponent,
     FooterComponent,
     NavbarComponent,
@@ -98,12 +101,15 @@ import { GpProfileEditPageComponent } from './content/gp-profile-edit-page/gp-pr
     UpdateluggageComponent,
     UpdateVoyageComponent,
     GpProfileEditPageComponent,
+    NumberFormatterPipe,
   ],
   exports: [
     IndexComponent,
+    ConfirmationDialogComponent,
     ProfilepageComponent,
     RegisterpageComponent,
     LandingpageComponent,
+    NumberFormatterPipe,
   ],
   providers: [],
 })

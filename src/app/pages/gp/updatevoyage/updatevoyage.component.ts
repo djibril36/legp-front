@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { VoyageService } from "src/app/utils/services/voyage.service";
 import { Voyage } from "src/app/utils/models/voyage";
 import { Subject } from "rxjs";
+import { STATUTS_VOYAGES } from "src/app/utils/constantes/constantes";
 
 @Component({
   selector: "app-updatevoyage",
@@ -11,44 +12,45 @@ import { Subject } from "rxjs";
   styleUrls: ["./updatevoyage.component.scss"],
 })
 export class UpdateVoyageComponent implements OnInit {
-  onClose: any;
+  onClose: Subject<boolean>;
   updateVoyageForm: FormGroup;
   voyage: Voyage;
-  statuts = [
-    "voyage en cours",
-    "voyage annulé",
-    "voyage reporté",
-    "voyage terminé",
-  ];
+  statuts = STATUTS_VOYAGES;
 
   constructor(
     public bsModalRef: BsModalRef,
     private fb: FormBuilder,
     private _voyageService: VoyageService
-  ) {}
+  ) {
+    this.onClose = new Subject<boolean>();
+  }
 
   ngOnInit() {
+    // Initialize the form with the current voyage data
     this.updateVoyageForm = this.fb.group({
       statut: [this.voyage.statut, Validators.required],
       date_voyage: [this.voyage.date_voyage, Validators.required],
       ville_depart: [this.voyage.ville_depart, Validators.required],
       ville_arrivee: [this.voyage.ville_arrivee, Validators.required],
     });
+
     this.initEtatsVoyage();
-    this.onClose = new Subject();
   }
 
-  // changement etat du colis
+  // Handle change of voyage status
   changeEtatVoyage(event: any) {
-    this.updateVoyageForm.value["statut"] = event.target.value;
+    const selectedStatut = event.target.value;
+    this.updateVoyageForm.patchValue({ statut: selectedStatut });
   }
 
+  // Initialize the status options excluding the current status
   initEtatsVoyage() {
-    for (let i = 0; i < this.statuts.length; i++) {
-      if (this.statuts[i] === this.voyage.statut) this.statuts.splice(i, 1);
-    }
+    this.statuts = this.statuts.filter(
+      (statut) => statut !== this.voyage.statut
+    );
   }
 
+  // Save the changes made to the voyage
   async saveChanges() {
     if (this.updateVoyageForm.valid) {
       const updatedVoyage = { ...this.voyage, ...this.updateVoyageForm.value };
@@ -64,6 +66,7 @@ export class UpdateVoyageComponent implements OnInit {
     }
   }
 
+  // Close the modal without saving changes
   close() {
     this.bsModalRef.hide();
   }

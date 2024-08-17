@@ -9,6 +9,8 @@ import {
 import { ColisService } from "src/app/utils/services/colis.service";
 import { Observable, Subject } from "rxjs";
 import { Colis } from "src/app/utils/models/colis";
+import { STATUTS_COLIS } from "src/app/utils/constantes/constantes";
+
 @Component({
   selector: "app-updateluggage",
   templateUrl: "./updateluggage.component.html",
@@ -23,12 +25,7 @@ export class UpdateluggageComponent implements OnInit {
   editColisForm: FormGroup;
   isPesable: boolean = true;
   isautreEtat: boolean = false;
-  etatsColis = [
-    "voyage en cours",
-    "colis disponible",
-    "colis recupéré",
-    "autre",
-  ];
+  etatsColis = STATUTS_COLIS;
 
   constructor(
     public bsModalRef: BsModalRef,

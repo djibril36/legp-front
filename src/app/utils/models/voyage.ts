@@ -7,6 +7,8 @@ export interface Voyage {
   kilo_dispo?: number;
   nombre_de_colis?: number;
   tarif?: number;
+  encaisse?: any;
+  poids_colis?: any;
   nom_gp?: string;
   semaine?: number;
   commentaire?: string;
