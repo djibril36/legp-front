@@ -185,7 +185,7 @@
                 </div>
                 <div class="row">
                   <!-- kilos dispo pour le voyage -->
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label> Nbr de kilos dispo</label>
                       <input
@@ -196,7 +196,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <!-- tarif : prix par kg -->
                     <div class="form-group">
                       <label> Tarif/kg </label>
@@ -215,6 +215,43 @@
                       >
                         <div *ngIf="f.tarif.errors.required">
                           Tarif obligatoire
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- monnaie -->
+                    <div class="form-group" *ngIf="pays$ | async as pays">
+                      <label> Monnaie </label>
+                      <select
+                        [ngClass]="{
+                          'is-invalid': submitted && f.devise.errors
+                        }"
+                        class="form-control select-option"
+                        formControlName="devise"
+                        (change)="selectDevise($event)"
+                      >
+                        <option *ngFor="let p of pays" [value]="p.devise">
+                          {{ p.devise }}
+                        </option>
+                      </select>
+
+                      <!-- <input
+                        [ngClass]="{
+                          'is-invalid': submitted && f.devise.errors
+                        }"
+                        class="form-control"
+                        type="number"
+                        value="70"
+                        formControlName="devise"
+                      /> -->
+
+                      <div
+                        *ngIf="submitted && f.depart.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.devise.errors.required">
+                          Monnaie obligatoire
                         </div>
                       </div>
                     </div>

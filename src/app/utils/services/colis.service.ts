@@ -36,10 +36,10 @@ export class ColisService {
         params: { "filters[numero_colis][$eq]": colis_number },
       })
       .pipe(
-        map(
-          (response) =>
-            response.data.map((x) => ({ id: x.id, ...x.attributes }))[0]
-        )
+        map((response) => {
+          const colis = response.data[0]; // Prend le premier élément du tableau
+          return colis ? { id: colis.id, ...colis.attributes } : null; // Retourne l'objet Colis ou null s'il n'existe pas
+        })
       );
   }
 

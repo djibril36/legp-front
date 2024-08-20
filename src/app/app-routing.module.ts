@@ -52,13 +52,13 @@ const routes: Routes = [
     component: GpManagetripComponent,
   },
   { path: "client-trip", component: ClientTripComponent },
-  // {
-  //   path: "gp-profile-edit",
-  //   canActivate: [LoggedInGuard],
-  //   component: GpProfileEditPageComponent,
-  // },
+  {
+    path: "gp-profile-edit",
+    canActivate: [LoggedInGuard],
+    component: GpProfileEditPageComponent,
+  },
 
-  // { path: "own-clients", component: OwnClientsComponent },
+  { path: "own-clients", component: OwnClientsComponent },
 ];
 
 @NgModule({

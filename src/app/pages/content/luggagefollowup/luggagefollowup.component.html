@@ -140,60 +140,60 @@
             </a>
           </div>
         </div>
+
         <!-- *ngIf="luggage_founded" -->
         <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-          <div class="text-center" *ngIf="isErrornum">
+          <!-- Message d'erreur si aucun colis n'est trouvé -->
+          <div class="text-center" *ngIf="isNotColisFounded">
             <h4 class="title">Le numero de colis est incorrect</h4>
             <span> Merci de verifier ou contacter votre GP </span>
           </div>
+
+          <!-- Affichage des détails du colis si trouvé -->
           <div
             class="card card-coin card-plain"
-            *ngIf="luggage_founded && colis$ | async as colis"
+            *ngIf="colis$ | async as colis"
           >
             <div class="card-header">
               <img
                 class="img-center img-fluid rounded-circle"
                 src="assets/img/bag.jpg"
               />
-
-              <h4 class="title">{{ colis[0].numero_colis }}</h4>
+              <h4 class="title">{{ colis.numero_colis }}</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table">
-                  <!-- <thead class="text-danger">
-                        <tr>
-                          <th class="header">COIN</th>
-                          <th class="header">AMOUNT</th>
-                        </tr>
-                      </thead> -->
-
                   <tbody>
                     <tr>
                       <td>Desciption</td>
-                      <td>{{ colis[0].description }}</td>
+                      <td>{{ colis.description }}</td>
                     </tr>
                     <tr>
                       <td>Etat collis</td>
-                      <td>{{ colis[0].etatColis }}</td>
+                      <td>{{ colis.etatColis }}</td>
                     </tr>
                     <tr>
-                      <td>Montat</td>
-                      <td>{{ colis[0].montant }}/payé</td>
+                      <td>Montant</td>
+                      <td>
+                        {{ colis.montant }} /
+                        {{ colis.paye ? "payé" : "non payé" }}
+                      </td>
                     </tr>
                     <tr>
                       <td>GP</td>
-                      <td>{{ colis[0].nom_gp | uppercase }}</td>
+                      <td>{{ colis.nom_gp | uppercase }}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-          <div *ngIf="luggage_founded">
+
+          <!-- Afficher l'interface de commentaire si le colis est trouvé -->
+          <div *ngIf="colis$ | async as colis">
             <div class="row">
               <div class="col-sm-9">Laissez un avis sur le GP</div>
-
               <div class="col-sm-9">
                 <ul
                   class="list-inline rating-list"
@@ -208,21 +208,8 @@
                   </li>
                 </ul>
               </div>
-
-              <!-- <div class="col-sm-9">
-                <div class="form-group">
-                  <input
-                    class="form-control"
-                    placeholder="Prenom et Nom"
-                    type="text"
-                  />
-
-                  <span class="form-text"> Votre commentaire ici </span>
-                </div>
-              </div> -->
             </div>
             <div class="row">
-              <!-- <label class="col-sm-3 col-form-label"> Amount </label> -->
               <div class="col-sm-9">
                 <div class="form-group">
                   <input

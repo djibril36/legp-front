@@ -183,7 +183,6 @@
 </div>
 
 <!--_____________________ CONNEXION MODAL_________________  -->
-
 <div
   aria-hidden="true"
   aria-labelledby="myModalLabel"
@@ -211,6 +210,23 @@
         </div>
       </div>
       <div class="modal-body">
+        <!-- Loader -->
+        <div *ngIf="isLoading" class="text-center mb-3">
+          <div class="airplane-spinner">
+            <img
+              src="assets/img/ticket-flight.png"
+              alt="Airplane in flight"
+              class="airplane"
+            />
+          </div>
+          <p>Connexion en cours...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="erroMessage && !isLoading" class="alert alert-danger">
+          {{ erroMessage }}
+        </div>
+
         <form class="form" [formGroup]="registerForm">
           <div class="form-group mb-3">
             <div
@@ -281,7 +297,6 @@
                 class="form-check-input"
                 type="checkbox"
               />
-
               <span class="form-check-sign"> </span> Se souvenir de moi!
             </label>
           </div>
@@ -289,7 +304,7 @@
             <button
               class="btn btn-primary my-4"
               type="button"
-              *ngIf="!isLoggedIn"
+              *ngIf="!isLoading"
               (click)="logOn()"
             >
               Se connecter

@@ -160,7 +160,6 @@ export class CreateluggageComponent implements OnInit {
       this.amountInXOF = this.convertCurrency(amount, selectedDevise);
       this.voyageSelected.encaisse =
         this.voyageSelected.encaisse + this.amountInXOF;
-      console.log(this.voyageSelected.encaisse);
     }
     this.selectedDevise = selectedDevise;
   }

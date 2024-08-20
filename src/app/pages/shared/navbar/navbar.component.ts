@@ -1,9 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { RegisterService } from "src/app/utils/services/register.service";
-import { ToastService } from "src/app/utils/services/toast.service";
 import { StorageService } from "src/app/utils/services/storage.service";
 
 @Component({
@@ -11,7 +10,7 @@ import { StorageService } from "src/app/utils/services/storage.service";
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.scss"],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   identifier: string;
   password: string;
@@ -20,7 +19,8 @@ export class NavbarComponent implements OnInit {
   focus2: boolean;
 
   submitted: boolean = false;
-  erroMessage: string = "Nom utlisateur ou mot de passe incorrect";
+  isLoading = false; // Pour gérer l'état du loader
+  erroMessage: string = "";
   isLoggedIn = false;
   avatarInitial = "";
   username = "";
@@ -32,7 +32,6 @@ export class NavbarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _router: Router,
     private _storageService: StorageService,
-    private _toast: ToastService,
     private _registerService: RegisterService
   ) {}
 
@@ -66,6 +65,9 @@ export class NavbarComponent implements OnInit {
 
   async logOn() {
     this.submitted = true;
+    this.erroMessage = ""; // Clear previous error message
+    this.isLoading = true; // Show loader
+
     if (this.registerForm.valid) {
       this._registerService
         .login(
@@ -79,22 +81,21 @@ export class NavbarComponent implements OnInit {
             const attemptedRoute =
               this._storageService.getItem("attemptedRoute");
             this._storageService.removeItem("attemptedRoute");
-            this._router.navigateByUrl(attemptedRoute || "/");
-            this._router.navigateByUrl("/gp-profile");
+            this.isLoading = false; // Hide loader
+            this._router.navigateByUrl(attemptedRoute || "/gp-profile");
           },
           error: (error) => {
-            this.erroMessage;
-            this._toast.showDanger(
-              "Login unsuccessful. Check your credentials."
-            );
+            this.erroMessage = "Nom d'utilisateur ou mot de passe incorrect"; // Show error message
+            this.isLoading = false; // Hide loader
           },
         });
+    } else {
+      this.isLoading = false; // Hide loader if form is invalid
     }
   }
 
   logOut() {
     this._registerService.logout();
-    this._toast.showSuccess("Successfully logged out.");
     this._router.navigateByUrl("/");
   }
 }

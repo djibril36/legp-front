@@ -25,9 +25,10 @@ import {
 
 import { PagesModule } from "./pages/pages.module";
 import { ErrorInterceptor } from "./utils/services/http-interceptors/error.interceptor.service";
+import { ConnexionModalComponent } from './utils/dialog/connexion-modal/connexion-modal.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ConnexionModalComponent],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,

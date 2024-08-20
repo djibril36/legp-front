@@ -10,6 +10,7 @@ import { VoyageService } from "src/app/utils/services/voyage.service";
 import { DEFAULT_STATUT } from "src/app/utils/constantes/constantes";
 import { Observable } from "rxjs";
 import { Voyage } from "src/app/utils/models/voyage";
+import { Pays } from "src/app/utils/models/pays";
 
 @Component({
   selector: "app-gpprofilepage",
@@ -17,16 +18,18 @@ import { Voyage } from "src/app/utils/models/voyage";
   styleUrls: ["./gpprofilepage.component.scss"],
 })
 export class GpprofilepageComponent implements OnInit {
+  focus3: boolean;
+  erroMessage: any;
   isCollapsed = true;
   submitted = false;
-  focus3: boolean;
-  connectedUser: Utilisateur;
-  voyageForm: FormGroup;
-  currentToken: string;
-  minDate = new Date();
   controlValid = false;
   httpOptions: {};
-  erroMessage: any;
+  currentToken: string;
+  selectedDevise: string;
+  minDate = new Date();
+  voyageForm: FormGroup;
+  connectedUser: Utilisateur;
+  pays$: Observable<Pays[]> | undefined;
   voyages$: Observable<Voyage[]> | undefined;
 
   constructor(
@@ -51,6 +54,7 @@ export class GpprofilepageComponent implements OnInit {
   }
 
   getUserVoyages() {
+    this.pays$ = this._voyageService.getPays();
     this.connectedUser = this._registerService.getConnectedUser();
     if (this.connectedUser.username) {
       this.voyages$ = this._voyageService.getVoyagesDuGp(
@@ -79,6 +83,8 @@ export class GpprofilepageComponent implements OnInit {
 
   addVoyageData() {
     const idVoyage = this.generateIdVoyage(this.connectedUser.username);
+    const dateVoyage = new Date(this.voyageForm.value["date_voyage"]);
+    const semaineVoyage = this.getWeekNumber(dateVoyage); // Récupération de la semaine
     const newVoyage = {
       data: {
         id_voyage: idVoyage,
@@ -87,8 +93,9 @@ export class GpprofilepageComponent implements OnInit {
         ville_arrivee: this.voyageForm.value["arrivee"].toUpperCase(),
         kilo_dispo: this.voyageForm.value["kg_disponible"] || 100,
         tarif: this.voyageForm.value["tarif"],
+        devise: this.selectedDevise,
         nom_gp: this.connectedUser.username,
-        semaine: 40,
+        semaine: semaineVoyage,
         commentaire: this.voyageForm.value["commentaire"] || " ",
         nombre_de_colis: 0,
         voyage_statut: DEFAULT_STATUT,
@@ -112,12 +119,24 @@ export class GpprofilepageComponent implements OnInit {
     );
   }
 
+  getWeekNumber(date: Date): number {
+    const oneJan = new Date(date.getFullYear(), 0, 1);
+    const numberOfDays = Math.floor(
+      (date.getTime() - oneJan.getTime()) / (24 * 60 * 60 * 1000)
+    );
+    return Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
+  }
+  selectDevise(event: Event) {
+    this.selectedDevise = (event.target as HTMLSelectElement).value;
+  }
+
   inputControl() {
     if (
       this.voyageForm.value["depart"] != null &&
       this.voyageForm.value["arrivee"] != null &&
       this.voyageForm.value["date_voyage"] != null &&
-      this.voyageForm.value["tarif"] != null
+      this.voyageForm.value["tarif"] != null &&
+      this.voyageForm.value["devise"] != null
     ) {
       return true;
     }
@@ -130,6 +149,7 @@ export class GpprofilepageComponent implements OnInit {
       arrivee: ["", Validators.required],
       date_voyage: ["", Validators.required],
       tarif: ["", Validators.required],
+      devise: ["", Validators.required],
       kg_disponible: [""],
       commentaire: [""],
     });
