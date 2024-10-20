@@ -6,6 +6,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
+import { LOCALE_ID } from "@angular/core";
+
 // import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 // import { ProgressbarModule } from "ngx-bootstrap/progressbar";
 // import { TooltipModule } from "ngx-bootstrap/tooltip";
@@ -16,6 +20,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 // import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 // import { CarouselModule } from "ngx-bootstrap/carousel";
 // import { ModalModule } from "ngx-bootstrap/modal";
+
+// Enregistrer la locale française
+registerLocaleData(localeFr, "fr");
 import {
   FormBuilder,
   FormsModule,
@@ -25,22 +32,27 @@ import {
 
 import { PagesModule } from "./pages/pages.module";
 import { ErrorInterceptor } from "./utils/services/http-interceptors/error.interceptor.service";
-import { ConnexionModalComponent } from './utils/dialog/connexion-modal/connexion-modal.component';
+import { BrowserModule } from "@angular/platform-browser";
 
 @NgModule({
-  declarations: [AppComponent, ConnexionModalComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
     PagesModule,
+    BrowserModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: "fr",
     },
   ],
   bootstrap: [AppComponent],

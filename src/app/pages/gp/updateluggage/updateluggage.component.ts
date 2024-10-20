@@ -1,13 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { BsModalRef } from "ngx-bootstrap/modal";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ColisService } from "src/app/utils/services/colis.service";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { Colis } from "src/app/utils/models/colis";
 import { STATUTS_COLIS } from "src/app/utils/constantes/constantes";
 
@@ -19,7 +14,7 @@ import { STATUTS_COLIS } from "src/app/utils/constantes/constantes";
 export class UpdateluggageComponent implements OnInit {
   colis: Colis;
   onClose: any;
-  idColis: number;
+  idColis: number; // s'assurer que l'id est bien défini
   payement: string;
   nvEtatColis: string;
   editColisForm: FormGroup;
@@ -56,6 +51,9 @@ export class UpdateluggageComponent implements OnInit {
         Validators.required,
       ],
     });
+
+    // S'assurer que l'ID du colis est bien récupéré
+    this.idColis = this.colis.id; // Par exemple, vérifier que l'id est correctement défini
   }
 
   initEtatsColis() {
@@ -76,6 +74,7 @@ export class UpdateluggageComponent implements OnInit {
   async saveChanges() {
     if (this.editColisForm.valid) {
       const changedColis: Colis = {
+        id: this.idColis, // Ajouter l'ID ici pour l'envoi à l'API
         description: this.editColisForm.value["description"],
         montant: this.editColisForm.value["montant"],
         expediteur: this.editColisForm.value["expediteur"],
@@ -88,11 +87,14 @@ export class UpdateluggageComponent implements OnInit {
         poids: this.editColisForm.value["poids"],
         paye: this.editColisForm.value["paye"] === "oui" ? true : false,
       };
-      // envoi vers l API
-      this._colisService.updateColis(changedColis).subscribe(() => {
-        this.onClose.next(true);
-        this.bsModalRef.hide();
-      });
+
+      // Envoi vers l'API avec l'ID du colis pour la mise à jour
+      this._colisService
+        .updateColis(this.idColis, changedColis)
+        .subscribe(() => {
+          this.onClose.next(true);
+          this.bsModalRef.hide();
+        });
     }
   }
 

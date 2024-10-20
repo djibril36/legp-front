@@ -32,10 +32,24 @@ export class VoyageService {
   ) {}
 
   // Voyages list pour les clients
-  getVoyages(): Observable<Voyage> {
+
+  getVoyages() {
+    const today = new Date().toISOString().split("T")[0]; // Obtenir la date actuelle au format ISO sans l'heure
+
+    this.params = {
+      params: {
+        "filters[date_voyage][$gte]": today, // Filtrer les voyages avec une date de départ >= aujourd'hui
+        populate: "*", // Inclure les relations liées si nécessaire
+      },
+    };
+
     return this.http
-      .get<Voyage>(this.apiProdURL + "/voyages")
-      .pipe(retry(1), catchError(this.handleError));
+      .get<responseVoyage>(this.apiProdURLVoyages, this.params)
+      .pipe(
+        map((response) =>
+          response.data.map((x) => ({ id: x.id, ...x.attributes }))
+        )
+      );
   }
 
   // trouver un voyage avec des parametres de recherches depart arrivee et date

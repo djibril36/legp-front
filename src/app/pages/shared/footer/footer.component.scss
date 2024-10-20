@@ -1,0 +1,13 @@
+.logo-container {
+    position: fixed; /* Keep the logo at the bottom even when scrolling */
+    bottom: 0;       /* Position it at the bottom of the page */
+    left: 50%;       /* Center horizontally */
+    transform: translateX(-50%); /* Adjust to be perfectly centered */
+    z-index: 999;    /* Make sure it's on top of other elements */
+  }
+  
+  .logo-container img {
+    height: 100px;  /* Adjust the height of the logo as needed */
+    width: auto;    /* Maintain aspect ratio */
+  }
+  

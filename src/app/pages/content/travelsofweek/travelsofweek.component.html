@@ -1,19 +1,18 @@
 <div class="section section-coins">
   <div class="container">
-    <!-- <img class="path" src="assets/img/path1.png" />
-      <div class="space-50"></div> -->
     <div class="row">
       <div class="col-md-4">
         <hr class="line-info" />
-
         <h1>
           Les prochains départs
-          <span class="text-info"> faites votre choix </span>
+          <span class="text-info">faites votre choix</span>
         </h1>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3">
+      <!-- Utilisation de *ngFor pour générer les cartes de voyages -->
+      <div *ngFor="let voyage of Voyages" class="col-md-3">
         <div class="card card-coin card-plain">
           <div class="card-header">
             <img class="img-center img-fluid" src="/assets/img/8bag.png" />
@@ -21,132 +20,44 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12 text-center">
-                <h4 class="text-uppercase">Mina GP</h4>
-                <span> Kaoalack-Dakar vers Rabat </span>
+                <h4 class="text-uppercase">
+                  {{ voyage.nom_gp || text - uppercase }}
+                </h4>
+                <span
+                  >{{ voyage.ville_depart }} vers
+                  {{ voyage.ville_arrivee }}</span
+                >
                 <hr class="line-success" />
               </div>
             </div>
             <div class="row">
               <ul class="list-group">
-                <li class="list-group-item">40 kg disponibles</li>
-                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
-                <li class="list-group-item">Départ : 22 Septembre 2023</li>
-                <li class="list-group-item">Dépot : Q. Medina Baye</li>
-                <li class="list-group-item">Reception : Rabat Agdal</li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            <button class="btn btn-success btn-simple" (click)="loadVoyages()">
-              Contact du GP
-            </button>
-          </div>
-        </div>
-      </div>
+                <li class="list-group-item">
+                  {{ voyage.kilo_dispo }} kg disponibles
+                </li>
+                <li class="list-group-item">
+                  {{ voyage.tarif }} {{ voyage.devise }}/kg
+                  <!-- ===
+                  {{ voyage.tarif }} fr/kg -->
+                </li>
+                <li class="list-group-item">
+                  Départ :
+                  {{ voyage.date_voyage | date : "dd MMMM yyyy" | uppercase }}
+                </li>
 
-      <!-- <div *ngFor="let voyaye of Voyages">
-        <p>{{ voyage.id_voyage }}</p>
-        <p>{{ voyage.depart }}</p>
-        <p>{{ voyage.arrivee }}</p>
-      </div> -->
-
-      <div class="col-md-3">
-        <div class="card card-coin card-plain">
-          <div class="card-header">
-            <img class="img-center img-fluid" src="/assets/img/46bag.png" />
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <h4 class="text-uppercase">Mina GP</h4>
-                <span> Kaoalack-Dakar vers Rabat </span>
-                <hr class="line-success" />
-              </div>
-            </div>
-            <div class="row">
-              <ul class="list-group">
-                <li class="list-group-item">40 kg disponibles</li>
-                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
-                <li class="list-group-item">Départ : 22 Septembre 2023</li>
-                <li class="list-group-item">Dépot : Q. Medina Baye</li>
-                <li class="list-group-item">Reception : Rabat Agdal</li>
+                <li class="list-group-item">
+                  Dépot : {{ voyage.ville_depart }}
+                </li>
+                <li class="list-group-item">
+                  Reception : {{ voyage.ville_arrivee }}
+                </li>
               </ul>
             </div>
           </div>
           <div class="card-footer text-center">
             <button
               class="btn btn-success btn-simple"
-              data-target="#myModal1"
-              (click)="myModal1.show()"
-            >
-              Contact du GP
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="card card-coin card-plain">
-          <div class="card-header">
-            <img class="img-center img-fluid" src="/assets/img/44bag.png" />
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <h4 class="text-uppercase">Mina GP</h4>
-                <span> Kaoalack-Dakar vers Rabat </span>
-                <hr class="line-success" />
-              </div>
-            </div>
-            <div class="row">
-              <ul class="list-group">
-                <li class="list-group-item">40 kg disponibles</li>
-                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
-                <li class="list-group-item">Départ : 22 Septembre 2023</li>
-                <li class="list-group-item">Dépot : Q. Medina Baye</li>
-                <li class="list-group-item">Reception : Rabat Agdal</li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            <button
-              class="btn btn-success btn-simple"
-              data-target="#myModal1"
-              (click)="myModal1.show()"
-            >
-              Contact du GP
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="card card-coin card-plain">
-          <div class="card-header">
-            <img class="img-center img-fluid" src="/assets/img/9bag.png" />
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <h4 class="text-uppercase">Mina GP</h4>
-                <span> Kaoalack-Dakar vers Rabat </span>
-                <hr class="line-success" />
-              </div>
-            </div>
-            <div class="row">
-              <ul class="list-group">
-                <li class="list-group-item">40 kg disponibles</li>
-                <li class="list-group-item">70dh/kg === 4200fr/kg</li>
-                <li class="list-group-item">Départ : 22 Septembre 2023</li>
-                <li class="list-group-item">Dépot : Q. Medina Baye</li>
-                <li class="list-group-item">Reception : Rabat Agdal</li>
-              </ul>
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            <button
-              class="btn btn-success btn-simple"
-              data-target="#myModal1"
-              (click)="myModal1.show()"
+              (click)="showContact(voyage)"
             >
               Contact du GP
             </button>
@@ -157,7 +68,8 @@
   </div>
 </div>
 
-<!--__________________________ DIALOG POR LE NUMERO DU GP_______________________ -->
+<!-- Modal pour afficher les contacts -->
+<!-- Modal pour afficher les contacts -->
 <div
   aria-hidden="true"
   aria-labelledby="myModalLabel"
@@ -178,25 +90,18 @@
           (click)="myModal1.hide()"
           type="button"
         >
-          <i class="tim-icons icon-simple-remove text-white"> </i>
+          <i class="tim-icons icon-simple-remove text-white"></i>
         </button>
         <div class="modal-profile">
-          <i class="tim-icons icon-single-02"> </i>
+          <i class="tim-icons icon-single-02"></i>
         </div>
       </div>
       <div class="modal-body">
-        <p>MINA GP</p>
-        <p>+212 XXX XX XX XX</p>
-        <p>+221 XX XXX XX XX</p>
+        <p>{{ selectedVoyage?.nom_gp | uppercase }}</p>
+        <p>77 YYY YYY YY</p>
       </div>
       <div class="modal-footer">
-        <!-- <button class="btn btn-link btn-neutral" type="button">Back</button> -->
-        <button
-          class="btn btn-link btn-neutral"
-          data-dismiss="modal"
-          type="button"
-          (click)="myModal1.hide()"
-        >
+        <button class="btn btn-link btn-neutral" (click)="myModal1.hide()">
           FERMER
         </button>
       </div>

@@ -149,15 +149,14 @@ export class CreateluggageComponent implements OnInit {
   selectDevise(event: Event) {
     const selectedDevise = (event.target as HTMLSelectElement).value;
 
-    if (
-      this.voyageSelected &&
-      selectedDevise &&
-      selectedDevise !== DEFAULT_CURRENCY
-    ) {
+    if (this.voyageSelected && selectedDevise) {
       const amount = this.descriptionColisTab1Form.value["montantp"]
         ? this.descriptionColisTab1Form.value["montantp"]
         : this.descriptionColisTab2Form.value["montantnp"];
-      this.amountInXOF = this.convertCurrency(amount, selectedDevise);
+      this.amountInXOF =
+        selectedDevise !== DEFAULT_CURRENCY
+          ? this.convertCurrency(amount, selectedDevise)
+          : amount;
       this.voyageSelected.encaisse =
         this.voyageSelected.encaisse + this.amountInXOF;
     }

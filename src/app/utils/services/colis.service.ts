@@ -77,8 +77,8 @@ export class ColisService {
   }
 
   // Modifier un colis
-  updateColis(colis: Colis): Observable<any> {
-    return this.http.put(this.apiColisURL + "/" + colis.id, { data: colis });
+  updateColis(id: number, colis: Colis): Observable<any> {
+    return this.http.put(this.apiColisURL + "/" + id, { data: colis });
   }
 
   // Récupérer les colis du groupe connecté

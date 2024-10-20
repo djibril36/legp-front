@@ -84,11 +84,11 @@
             class="dropdown-menu dropdown-with-icons select-option"
             *dropdownMenu
           >
-            <a class="dropdown-item">
-              <!-- [routerLink]="['/gp-profile']" -->
+            <a class="dropdown-item" [routerLink]="['/gp-profile']">
               <i class="tim-icons icon-paper"> </i>Espace e-GP
             </a>
-            <a class="dropdown-item" [routerLink]="['/gp-profile-edit']">
+            <a class="dropdown-item">
+              <!-- [routerLink]="['/gp-profile-edit']" -->
               <i class="tim-icons icon-bullet-list-67"> </i>Modifier profil
             </a>
             <a class="dropdown-item" (click)="logOut()">
